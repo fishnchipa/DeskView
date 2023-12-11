@@ -4,17 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 
 import javax.imageio.ImageIO;
 
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -30,6 +30,10 @@ public class AppTest {
     public void shouldAnswerWithTrue() {
         assertTrue( true );
     }
+
+    /*
+     * Server Side Tests
+     */
 
     @Test 
     public void establishedSuccessfulServerConnectionToClient() throws IOException {
@@ -95,12 +99,35 @@ public class AppTest {
         assertTrue("Image successfully sent", compareImage(clientImage, serverImage));
     }
 
-    @Ignore 
+    @Test
     public void sendKeyEventToClient() {
         Server server = new Server();
+        DummySocket socket = new DummySocket();
+
+        int keyPressedServer = KeyEvent.VK_H;
+        server.sendKeyEvent(socket, keyPressedServer);
+        int keyPressedClient = socket.output();
         server.close();
 
+        assertTrue("Key successfully sent", keyPressedClient == keyPressedServer);
+    }
 
+    /*
+     * Client Side Tests
+     */
+
+    @Test 
+    public void sendImageToServer() throws IOException {
+        DummySocket server = new DummySocket();
+        Client client = new Client();
+
+        File imagePath = new File("src/test/resources/image1.png");
+        BufferedImage clientImage = ImageIO.read(imagePath);
+
+        client.sendScreen(server, clientImage);
+        BufferedImage serverImage = server.getImage();
+
+        assertTrue("Image successfully sent", clientImage == serverImage);
     }
 
 }
