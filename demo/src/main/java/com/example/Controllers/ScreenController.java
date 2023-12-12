@@ -23,4 +23,8 @@ public class ScreenController {
     public static void activate(String name) {
         main.setRoot(screenMap.get(name));
     }
+
+    public void permission() {
+        
+    }
 }
