@@ -11,37 +11,60 @@ import java.net.Socket;
 
 import javax.imageio.ImageIO;
 
-import com.example.Controllers.ServerController;
+import com.example.Controllers.ScreenController;
+import com.example.Controllers.ViewController;
 
-public class Server {
-    private ServerSocket socket;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.image.WritableImage;
 
 
 
 
-    public void start() {
+public class Server implements Runnable {
+    private static ServerSocket socket;
+    private static Socket connection;
+    private FXMLLoader loader;
+
+    public void run() {
         try {
             socket = new ServerSocket(1234);
             
             // Continously listens to connetion event after disconnection
             while (true) {
-                Socket connection = socket.accept();
+                try {
 
-                while (true) {
-                    BufferedImage screen = getScreenFrom(connection);
+                    connection = socket.accept();
+
+                    // Permission for connection
+                    ScreenController.activate("permission");
                     
+                    wait();
+
+                    ScreenController.activate("view");
+                    ViewController view = (ViewController) loader.getController();
+
+                    // Begin recieving Images
+                    //while (true) {
+                        BufferedImage screen = getScreenFrom(connection);
+                        WritableImage image = SwingFXUtils.toFXImage(screen, null);
+
+                        view.setScreen(image);
+                        
+
+                    //}
+                } catch (IOException | InterruptedException e) {
+                    System.out.println("Invalid Ip");
                 }
-
-
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-
+    public static Socket getSocket() {
+        return connection;
+    }
 
     public InetAddress getAddress() {
         return socket.getInetAddress();
@@ -76,7 +99,7 @@ public class Server {
 
 
 
-    public void close() {
+    public static void close() {
         if (socket.isClosed()) {
             return;
         } else {
