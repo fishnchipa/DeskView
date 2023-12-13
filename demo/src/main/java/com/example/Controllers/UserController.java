@@ -29,9 +29,6 @@ public class UserController {
 
     private Client client = new Client();
 
-    public void initialize() {
-        
-    }
 
     public void submit(ActionEvent event) {
         System.out.println("Attemping to Connect to Server");

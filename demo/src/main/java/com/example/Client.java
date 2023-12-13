@@ -22,12 +22,15 @@ public class Client {
      * Checks if connection is valid
      */
     public boolean connectToServer(String ip) {
-        try {
-            socket = new Socket(ip, 8080);
+
+        try (Socket socket = new Socket(ip, 8080)) {
+            Server.close();
             return true;
         } catch (IOException e) {
+            System.out.println(ip);
             return false;
-        } 
+        }
+
     }
 
     public boolean receivePermission() {

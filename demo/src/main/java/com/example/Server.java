@@ -104,6 +104,7 @@ public class Server implements Runnable {
         } else {
             try {
                 socket.close();
+                System.out.println("Closing Server");
             } catch (IOException e) {
                 e.printStackTrace();
             }

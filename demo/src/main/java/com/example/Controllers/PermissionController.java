@@ -1,12 +1,12 @@
 package com.example.Controllers;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import com.example.Server;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -14,10 +14,10 @@ import javafx.scene.control.Button;
 public class PermissionController {
     
     @FXML
-    private Button accept;
+    private Button accepting;
 
     @FXML
-    private Button decline;
+    private Button declining;
 
     public void accept(ActionEvent event) {
         Socket connection = Server.getSocket();
