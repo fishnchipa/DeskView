@@ -24,7 +24,7 @@ public class ScreenController {
         main.setRoot(screenMap.get(name));
     }
 
-    public void permission() {
-        
+    public static Parent getPane(String name) {
+        return screenMap.get(name);
     }
 }

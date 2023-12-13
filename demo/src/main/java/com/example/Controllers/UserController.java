@@ -36,11 +36,16 @@ public class UserController {
     public void submit(ActionEvent event) {
         System.out.println("Attemping to Connect to Server");
         if (client.connectToServer(ipConnection.getText())) {
+
             // Waiting for Server accept
             wait.setVisible(true);
             main.setDisable(true);
 
-            
+            if(client.receivePermission()) {
+                ScreenController.activate("capture");
+                client.sendScreen();
+            }
+
         } else {
             System.out.println("Failed to Connect");
         }

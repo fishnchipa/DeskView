@@ -21,7 +21,6 @@ public class PermissionController {
 
     public void accept(ActionEvent event) {
         Socket connection = Server.getSocket();
-        ScreenController.activate("view");
         
         // Sending confirmation to Client
         try {
