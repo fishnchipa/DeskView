@@ -71,7 +71,6 @@ public class Server implements Runnable {
     }
 
 
-
     public BufferedImage getScreenFrom(Socket socket) {
         BufferedImage image = null;
         try {
