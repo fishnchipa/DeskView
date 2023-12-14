@@ -1,5 +1,10 @@
 package com.example.Controllers;
 
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
 import com.example.Client;
 import com.example.Server;
 
@@ -8,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class UserController {
     
@@ -27,8 +33,22 @@ public class UserController {
     @FXML 
     private Pane wait;
 
+    @FXML 
+    private Text connectionId;
+
     private Client client = new Client();
 
+    public void initialize() {
+
+        DatagramSocket datagramSocket;
+        try {
+            datagramSocket = new DatagramSocket();
+            datagramSocket.connect(InetAddress.getByName("8.8.8.8"),12345);
+            connectionId.setText(datagramSocket.getLocalAddress().getHostAddress());
+        } catch (SocketException | UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void submit(ActionEvent event) {
         System.out.println("Attemping to Connect to Server");
@@ -46,5 +66,9 @@ public class UserController {
         } else {
             System.out.println("Failed to Connect");
         }
+    }
+
+    public void exit(ActionEvent event) {
+        System.exit(0);
     }
 }

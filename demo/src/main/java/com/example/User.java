@@ -42,11 +42,15 @@ public class User extends Application{
     }
 
 
+
     public static void main( String[] args )
     {
+        
         Server server = new Server();
         Thread serverThread = new Thread(server);
         serverThread.start();
+
+    
 
         launch();
     }
