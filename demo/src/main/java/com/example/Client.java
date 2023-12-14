@@ -8,6 +8,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.imageio.ImageIO;
 
@@ -16,24 +17,21 @@ import javafx.stage.Screen;
 
 public class Client {
 
-    private Socket socket; 
-
     /*
      * Checks if connection is valid
      */
-    public boolean connectToServer(String ip) {
-
-        try (Socket socket = new Socket(ip, 8080)) {
-            Server.close();
-            return true;
+    public Socket connectToServer(String ip) { 
+        try {
+            // Server.close();
+            Socket socket = new Socket(ip, 8080);
+            return socket;
         } catch (IOException e) {
-            System.out.println(ip);
-            return false;
-        }
-
+            System.out.println(ip + "Io exception");
+            return null;
+        } 
     }
 
-    public boolean receivePermission() {
+    public boolean receivePermission(Socket socket) {
         try (InputStreamReader reader = new InputStreamReader(socket.getInputStream())) {
             if (reader.read() == 1) {
                 return true;
@@ -44,7 +42,7 @@ public class Client {
         return false;
     }
 
-    public void sendScreen() {
+    public void sendScreen(Socket socket) {
         try {
             BufferedOutputStream os = new BufferedOutputStream(socket.getOutputStream());
 

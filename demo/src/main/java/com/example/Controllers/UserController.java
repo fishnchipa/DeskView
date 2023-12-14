@@ -2,6 +2,7 @@ package com.example.Controllers;
 
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -36,7 +37,9 @@ public class UserController {
     @FXML 
     private Text connectionId;
 
-    private Client client = new Client();
+    private Client client;
+
+    private Socket socket;
 
     public void initialize() {
 
@@ -51,16 +54,18 @@ public class UserController {
     }
 
     public void submit(ActionEvent event) {
+        client = new Client();
         System.out.println("Attemping to Connect to Server");
-        if (client.connectToServer(ipConnection.getText())) {
+        if ((socket = client.connectToServer(ipConnection.getText())) != null) {
 
             // Waiting for Server accept
             wait.setVisible(true);
             main.setDisable(true);
 
-            if(client.receivePermission()) {
+            if(client.receivePermission(socket)) {
+                System.out.println("Successfully Connected to Server");
                 ScreenController.activate("capture");
-                client.sendScreen();
+                // client.sendScreen(socket);
             }
 
         } else {

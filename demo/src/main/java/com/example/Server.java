@@ -28,35 +28,38 @@ public class Server implements Runnable {
 
     public void run() {
         try {
-            socket = new ServerSocket(1234);
+            socket = new ServerSocket(8080);
             
             // Continously listens to connetion event after disconnection
-            while (true) {
-                try {
+            //while (true) {
+            try {
 
-                    connection = socket.accept();
-
-                    // Permission for connection
-                    ScreenController.activate("permission");
-                    
+                connection = socket.accept();
+                System.out.println("Waiting Acception");
+                // Permission for connection
+                ScreenController.activate("permission");
+                synchronized(this) {
                     wait();
+                } 
+                
 
-                    ScreenController.activate("view");
-                    ViewController view = (ViewController) loader.getController();
+                ScreenController.activate("view");
+                ViewController view = (ViewController) loader.getController();
 
-                    // Begin recieving Images
-                    //while (true) {
-                        BufferedImage screen = getScreenFrom(connection);
-                        WritableImage image = SwingFXUtils.toFXImage(screen, null);
+                // Begin recieving Images
+                // while (true) {
+                //     BufferedImage screen = getScreenFrom(connection);
+                //     WritableImage image = SwingFXUtils.toFXImage(screen, null);
 
-                        view.setScreen(image);
-                        
+                //     view.setScreen(image);
+                    
 
-                    //}
-                } catch (IOException | InterruptedException e) {
-                    System.out.println("Invalid Ip");
-                }
+                // }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                System.out.println("Unable to accept");
             }
+            //}
         } catch (IOException e) {
             e.printStackTrace();
         }
