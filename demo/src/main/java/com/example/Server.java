@@ -35,28 +35,30 @@ public class Server implements Runnable {
             // Continously listens to connetion event after disconnection
             //while (true) {
             try {
-
                 connection = socket.accept();
-                System.out.println("Waiting Acception");
+    
+
                 // Permission for connection
+                System.out.println("Waiting Acception");
                 screenController.activate("permission");
                 synchronized(this) {
                     wait();
+                    System.out.println("Loading Screen");
+                    screenController.activate("view");
+                    loader = screenController.getLoader();
+                    ViewController view = (ViewController) loader.getController();
+
+                    // Begin recieving Images
+                    while (true) {
+                        BufferedImage screen = getScreenFrom(connection);
+                        WritableImage image = SwingFXUtils.toFXImage(screen, null);
+
+                        view.setScreen(image);
+                        
+                    }
                 } 
                 
-                screenController.activate("view");
-                loader = screenController.getLoader();
-                ViewController view = (ViewController) loader.getController();
 
-                // Begin recieving Images
-                while (true) {
-                    BufferedImage screen = getScreenFrom(connection);
-                    WritableImage image = SwingFXUtils.toFXImage(screen, null);
-
-                    view.setScreen(image);
-                    
-
-                }
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
                 System.out.println("Unable to accept");
@@ -71,9 +73,6 @@ public class Server implements Runnable {
         return connection;
     }
 
-    public InetAddress getAddress() {
-        return socket.getInetAddress();
-    }
 
 
     public BufferedImage getScreenFrom(Socket socket) {

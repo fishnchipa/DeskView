@@ -23,7 +23,8 @@ public class PermissionController {
 
     public void accept(ActionEvent event) {
         Socket connection = Server.getSocket();
-        
+        System.out.println("Accepted");
+
         // Sending confirmation to Client
         try {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
@@ -33,7 +34,9 @@ public class PermissionController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        notifyAll();
+        synchronized(this) {
+            notifyAll();
+        }
     }
 
     public void decline(ActionEvent event) {
