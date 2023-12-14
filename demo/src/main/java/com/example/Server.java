@@ -2,6 +2,7 @@ package com.example;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -24,6 +25,7 @@ import javafx.scene.image.WritableImage;
 public class Server implements Runnable {
     private static ServerSocket socket;
     private static Socket connection;
+    private ScreenController screenController = new ScreenController();
     private FXMLLoader loader;
 
     public void run() {
@@ -37,24 +39,24 @@ public class Server implements Runnable {
                 connection = socket.accept();
                 System.out.println("Waiting Acception");
                 // Permission for connection
-                ScreenController.activate("permission");
+                screenController.activate("permission");
                 synchronized(this) {
                     wait();
                 } 
                 
-
-                ScreenController.activate("view");
+                screenController.activate("view");
+                loader = screenController.getLoader();
                 ViewController view = (ViewController) loader.getController();
 
                 // Begin recieving Images
-                // while (true) {
-                //     BufferedImage screen = getScreenFrom(connection);
-                //     WritableImage image = SwingFXUtils.toFXImage(screen, null);
+                while (true) {
+                    BufferedImage screen = getScreenFrom(connection);
+                    WritableImage image = SwingFXUtils.toFXImage(screen, null);
 
-                //     view.setScreen(image);
+                    view.setScreen(image);
                     
 
-                // }
+                }
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
                 System.out.println("Unable to accept");
@@ -76,8 +78,10 @@ public class Server implements Runnable {
 
     public BufferedImage getScreenFrom(Socket socket) {
         BufferedImage image = null;
+        
         try {
-            image = ImageIO.read(socket.getInputStream());
+            BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
+            image = ImageIO.read(input);
         } catch (IOException e) {
             e.printStackTrace();
         }

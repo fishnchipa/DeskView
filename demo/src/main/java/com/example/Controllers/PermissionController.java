@@ -19,6 +19,8 @@ public class PermissionController {
     @FXML
     private Button declining;
 
+    private ScreenController screenController = new ScreenController();
+
     public void accept(ActionEvent event) {
         Socket connection = Server.getSocket();
         
@@ -36,7 +38,7 @@ public class PermissionController {
 
     public void decline(ActionEvent event) {
         Socket connection = Server.getSocket();
-        ScreenController.activate("start");
+        screenController.activate("start");
         try {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(0);

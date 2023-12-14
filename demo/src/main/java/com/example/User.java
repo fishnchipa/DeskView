@@ -16,24 +16,18 @@ public class User extends Application{
     @Override
     public void start(Stage primaryStage)  {
         Parent root;
-
+        FXMLLoader loader = new FXMLLoader();
         try {
-            
             root = FXMLLoader.load(getClass().getResource("/start.fxml"));
-            Scene scene = new Scene(root);
-            ScreenController screenController = new ScreenController(scene);
-            screenController.addScreen("start", root);
+            Scene main = new Scene(root);
+            ScreenController screenController = new ScreenController(loader, main);
 
-            root = FXMLLoader.load(getClass().getResource("/view.fxml"));
-            screenController.addScreen("view", root);
+            screenController.addScreen("start", "/start.fxml");
+            screenController.addScreen("view", "/view.fxml");
+            screenController.addScreen("permission", "/permission.fxml");
+            screenController.addScreen("capture", "/capture.fxml");
 
-            root = FXMLLoader.load(getClass().getResource("/permission.fxml"));
-            screenController.addScreen("permission", root);
-            
-            root = FXMLLoader.load(getClass().getResource("/capture.fxml"));
-            screenController.addScreen("capture", root);
-
-            primaryStage.setScene(scene);
+            primaryStage.setScene(main);
             primaryStage.show();
             
         } catch (IOException e) {

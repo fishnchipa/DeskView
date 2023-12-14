@@ -1,5 +1,6 @@
 package com.example.Controllers;
 
+import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -32,14 +33,13 @@ public class UserController {
     private Pane main;
 
     @FXML 
-    private Pane wait;
-
-    @FXML 
     private Text connectionId;
 
     private Client client;
 
     private Socket socket;
+
+    private ScreenController screenController = new ScreenController();
 
     public void initialize() {
 
@@ -55,22 +55,27 @@ public class UserController {
 
     public void submit(ActionEvent event) {
         client = new Client();
+
+
         System.out.println("Attemping to Connect to Server");
-        if ((socket = client.connectToServer(ipConnection.getText())) != null) {
+
+        try {
+            socket = new Socket(ipConnection.getText(), 8080);
 
             // Waiting for Server accept
-            wait.setVisible(true);
-            main.setDisable(true);
+            System.out.println("Waiting for Server");
+
 
             if(client.receivePermission(socket)) {
                 System.out.println("Successfully Connected to Server");
-                ScreenController.activate("capture");
-                // client.sendScreen(socket);
+                screenController.activate("capture");
+                client.sendScreen(socket);
             }
 
-        } else {
+
+        } catch (IOException e) {
             System.out.println("Failed to Connect");
-        }
+        } 
     }
 
     public void exit(ActionEvent event) {

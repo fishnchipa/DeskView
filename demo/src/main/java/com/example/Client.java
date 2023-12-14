@@ -8,7 +8,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.net.UnknownHostException;
+
 
 import javax.imageio.ImageIO;
 
@@ -22,13 +22,13 @@ public class Client {
      */
     public Socket connectToServer(String ip) { 
         try {
-            // Server.close();
             Socket socket = new Socket(ip, 8080);
             return socket;
         } catch (IOException e) {
-            System.out.println(ip + "Io exception");
-            return null;
+            System.exit(1);
+            
         } 
+        return null;
     }
 
     public boolean receivePermission(Socket socket) {
@@ -45,14 +45,15 @@ public class Client {
     public void sendScreen(Socket socket) {
         try {
             BufferedOutputStream os = new BufferedOutputStream(socket.getOutputStream());
+            while (true) {
+                Robot r = new Robot();
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                BufferedImage screen = r.createScreenCapture(new Rectangle((int) screenBounds.getWidth(), (int) screenBounds.getHeight()));
 
-            Robot r = new Robot();
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            BufferedImage screen = r.createScreenCapture(new Rectangle((int) screenBounds.getWidth(), (int) screenBounds.getHeight()));
-
-            ImageIO.write(screen, "png", os);
-            os.flush();
-
+                ImageIO.write(screen, "png", os);
+                os.flush();
+                System.out.print("Frame Sent");
+            }
         } catch (AWTException | IOException e) {
 
             e.printStackTrace();
