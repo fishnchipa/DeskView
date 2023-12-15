@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 
 public class User extends Application{
 
+
     @Override
     public void start(Stage primaryStage)  {
         Parent root;
@@ -35,16 +36,16 @@ public class User extends Application{
         }
     }
 
-
+    public static Server server;
 
     public static void main( String[] args )
     {
         
-        Server server = new Server();
+        server = new Server();
         Thread serverThread = new Thread(server);
         serverThread.start();
 
-    
+
 
         launch();
     }

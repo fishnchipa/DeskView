@@ -5,13 +5,14 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import com.example.Server;
+import com.example.User;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 
-public class PermissionController {
+public class PermissionController extends User{
     
     @FXML
     private Button accepting;
@@ -34,9 +35,10 @@ public class PermissionController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        synchronized(this) {
+        synchronized(server) {
             notifyAll();
         }
+        
     }
 
     public void decline(ActionEvent event) {
