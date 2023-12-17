@@ -19,20 +19,25 @@ public class Client {
     private BufferedInputStream input;
     private BufferedOutputStream output;
 
-    public Socket connectToServer(String ip) { 
+    private Socket socket;
+
+    public void connectToServer(String ip) { 
         try {
-            Socket socket = new Socket(ip, 8080);
+            socket = new Socket(ip, 8080);
             input = new BufferedInputStream(socket.getInputStream());
             output = new BufferedOutputStream(socket.getOutputStream());
-            return socket;
+
+            System.out.println("Processing connection" + " " + ip);
+
         } catch (IOException e) {
+            System.out.println("Failed to connect");
             System.exit(1);
         } 
-        return null;
     }
 
-    public boolean receivePermission(Socket socket) {
+    public boolean receivePermission() {
         try {
+            System.out.println("hi");
             if (input.read() == 1) {
                 System.out.println("Successful Connection");
                 return true;
@@ -41,6 +46,7 @@ public class Client {
             System.out.println("Unsuccessful Connection");
             return false;
         }
+        System.out.println("Unsuccessful Connection");
         return false;
     }
 

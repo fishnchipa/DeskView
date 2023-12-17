@@ -33,6 +33,7 @@ public class PermissionController {
         System.out.println("Loading Screen");
         ScreenController.activate("view");
         BufferedOutputStream writer = Server.getOutputStream();
+        
         // Sending confirmation to Client
         try {
 

@@ -1,15 +1,11 @@
 package com.example;
 
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,10 +13,6 @@ import javax.imageio.ImageIO;
 
 import com.example.Controllers.ScreenController;
 import com.example.Controllers.ViewController;
-
-import javafx.embed.swing.SwingFXUtils;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.image.WritableImage;
 
 
 
@@ -58,7 +50,11 @@ public class Server implements Runnable {
                 }
             
                 ViewController view = ScreenController.getController("view");
-                System.out.println(input.read());
+                int value = 0;
+                while (value != 99) {
+                    value = input.read();
+                    System.out.println(value);
+                }
 
 
             } catch (IOException | InterruptedException e) {

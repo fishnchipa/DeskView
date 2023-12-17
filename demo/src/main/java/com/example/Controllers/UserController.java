@@ -39,8 +39,6 @@ public class UserController {
 
     private Client client;
 
-    private Socket socket;
-
 
 
     public void initialize() {
@@ -58,26 +56,19 @@ public class UserController {
     public void submit(ActionEvent event) {
         client = new Client();
 
-
         System.out.println("Attemping to Connect to Server");
+        client.connectToServer(ipConnection.getText());
 
-        try {
-            socket = new Socket(ipConnection.getText(), 8080);
+        // Waiting for Server accept
+        System.out.println("Waiting for Server");
 
-            // Waiting for Server accept
-            System.out.println("Waiting for Server");
-
-
-            if(client.receivePermission(socket)) {
-                System.out.println("Successfully Connected to Server");
-                ScreenController.activate("capture");
-                // client.sendScreen(socket);
-                client.write(8008);
-            }
-            
-        } catch (IOException e) {
-            System.out.println("Failed to Connect");
-            System.exit(1);
+        if(client.receivePermission()) {
+            System.out.println("Successfully Connected to Server");
+            ScreenController.activate("capture");
+            // client.sendScreen(socket);
+            for (int i = 0; i < 100; i++) {
+                client.write(i);
+            } 
         } 
     }
 
