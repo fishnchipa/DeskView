@@ -22,9 +22,14 @@ import javafx.scene.image.WritableImage;
 
 
 
-public class Server extends User implements Runnable {
+public class Server implements Runnable {
     private static ServerSocket socket;
     private static Socket connection;
+    public Object lock;
+
+    public Server(Object lock) {
+        this.lock = lock;
+    }
 
     public void run() {
         try {
@@ -38,9 +43,9 @@ public class Server extends User implements Runnable {
 
                 // Permission for connection
                 System.out.println("Waiting Acception");
-                ScreenController.activate("permission");
+                ScreenController.activate("permission", lock);
 
-                synchronized(this) {
+                synchronized(lock) {
                     wait();
                 }
                 

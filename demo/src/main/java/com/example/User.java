@@ -3,6 +3,7 @@ package com.example;
 import java.io.IOException;
 
 import com.example.Controllers.ScreenController;
+import com.example.Controllers.UserController;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -16,23 +17,30 @@ public class User extends Application{
 
     @Override
     public void start(Stage primaryStage)  {
-        Parent root;
+        
         try {
-            root = FXMLLoader.load(getClass().getResource("/start.fxml"));
+
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/start.fxml"));
+            Parent root = loader1.load();
             Scene scene = new Scene(root);
+
             ScreenController screenController = new ScreenController(scene);
-            screenController.addScreen("start", root);
-            root = FXMLLoader.load(getClass().getResource("/view.fxml"));
-            screenController.addScreen("view", root);
+            screenController.addScreen("start", loader1);
 
-            root = FXMLLoader.load(getClass().getResource("/permission.fxml"));
-            screenController.addScreen("permission", root);
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/view.fxml"));
+            screenController.addScreen("view", loader2);
 
-            root = FXMLLoader.load(getClass().getResource("/capture.fxml"));
-            screenController.addScreen("capture", root);
+            FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/permission.fxml"));
+            screenController.addScreen("permission", loader3);
+
+            FXMLLoader loader4 = new FXMLLoader(getClass().getResource("/capture.fxml"));
+            screenController.addScreen("capture", loader4);
+
 
             primaryStage.setScene(scene);
             primaryStage.show();
+
+
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,8 +51,8 @@ public class User extends Application{
 
     public static void main( String[] args )
     {
-        
-        server = new Server();
+        Object lock = new Object();
+        server = new Server(lock);
         Thread serverThread = new Thread(server);
         serverThread.start();
 

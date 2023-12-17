@@ -20,7 +20,11 @@ public class PermissionController extends User{
     @FXML
     private Button declining;
 
+    private Object lock;
 
+    public PermissionController(Object lock) {
+        this.lock = lock;
+    }
 
     public void accept(ActionEvent event) {
         Socket connection = Server.getSocket();
@@ -37,7 +41,7 @@ public class PermissionController extends User{
             System.out.println("Acception error");
             e.printStackTrace();
         }
-        synchronized(server) {
+        synchronized(lock) {
             notifyAll();
         }
         
@@ -46,7 +50,7 @@ public class PermissionController extends User{
     public void decline(ActionEvent event) {
         Socket connection = Server.getSocket();
         ScreenController.activate("start");
-        
+
         try {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(0);

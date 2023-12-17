@@ -80,4 +80,9 @@ public class UserController {
     public void exit(ActionEvent event) {
         System.exit(0);
     }
+
+    public void test() {
+        System.out.println("Exiting");
+        System.exit(0);
+    }
 }
