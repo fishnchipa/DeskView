@@ -25,7 +25,7 @@ public class PermissionController extends User{
     public void accept(ActionEvent event) {
         Socket connection = Server.getSocket();
         System.out.println("Accepted");
-
+        screenController.activate("view");
         // Sending confirmation to Client
         try {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
@@ -33,6 +33,7 @@ public class PermissionController extends User{
             writer.close();
 
         } catch (IOException e) {
+            System.out.println("Acception error");
             e.printStackTrace();
         }
         synchronized(server) {
