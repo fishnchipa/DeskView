@@ -36,8 +36,10 @@ public class PermissionController {
 
         // Sending confirmation to Client
         try {
+
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(1);
+            System.out.println("Confirmation Sent");
 
         } catch (IOException e) {
             System.out.println("Acception error");

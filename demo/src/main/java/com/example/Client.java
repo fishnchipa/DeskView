@@ -33,9 +33,11 @@ public class Client {
     public boolean receivePermission(Socket socket) {
         try (InputStreamReader reader = new InputStreamReader(socket.getInputStream())) {
             if (reader.read() == 1) {
+                System.out.println("Successful Connection");
                 return true;
             }
         } catch (IOException e) {
+            System.out.println("Unsuccessful Connection");
             return false;
         }
         return false;
