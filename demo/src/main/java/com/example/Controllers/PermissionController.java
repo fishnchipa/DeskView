@@ -39,7 +39,6 @@ public class PermissionController {
         try {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(1);
-            writer.close();
 
         } catch (IOException e) {
             System.out.println("Acception error");

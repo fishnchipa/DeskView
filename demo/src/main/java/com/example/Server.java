@@ -3,8 +3,10 @@ package com.example;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -44,17 +46,21 @@ public class Server implements Runnable {
                 // Permission for connection
                 System.out.println("Waiting Acception");
                 ScreenController.activate("permission", this);
-
+                System.out.println(connection.isClosed());
                 synchronized(this) {
                     this.wait();
                 }
-            
+                System.out.println(connection.isClosed());
+
                 ViewController view = ScreenController.getController("view");
+                while (true) {
+             
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-                BufferedImage screen = getScreenFrom(connection);
-                WritableImage image = SwingFXUtils.toFXImage(screen, null);
-                view.setScreen(image);
-
+                    // WritableImage image = SwingFXUtils.toFXImage(screen, null);
+                    // view.setScreen(image);
+                    System.out.println(reader.readLine());
+                }
                 
 
             } catch (IOException | InterruptedException e) {
