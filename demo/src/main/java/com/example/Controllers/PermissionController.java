@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 
-public class PermissionController extends User{
+public class PermissionController {
     
     @FXML
     private Button accepting;
@@ -20,15 +20,19 @@ public class PermissionController extends User{
     @FXML
     private Button declining;
 
-    private Object lock;
+    private Server server;
 
-    public PermissionController(Object lock) {
-        this.lock = lock;
+    public PermissionController(Server server) {
+        this.server = server;
     }
 
     public void accept(ActionEvent event) {
         Socket connection = Server.getSocket();
+
+        
         System.out.println("Accepted");
+
+        System.out.println("Loading Screen");
         ScreenController.activate("view");
 
         // Sending confirmation to Client
@@ -41,8 +45,8 @@ public class PermissionController extends User{
             System.out.println("Acception error");
             e.printStackTrace();
         }
-        synchronized(lock) {
-            notifyAll();
+        synchronized(server) {
+            server.notify();
         }
         
     }

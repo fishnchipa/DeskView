@@ -43,22 +43,18 @@ public class Server implements Runnable {
 
                 // Permission for connection
                 System.out.println("Waiting Acception");
-                ScreenController.activate("permission", lock);
+                ScreenController.activate("permission", this);
 
-                synchronized(lock) {
-                    wait();
+                synchronized(this) {
+                    this.wait();
                 }
-                
-                System.out.println("Loading Screen");
-                ScreenController.activate("view");
-                // Begin recieving Images
-                // while (true) {
-                //     BufferedImage screen = getScreenFrom(connection);
-                //     WritableImage image = SwingFXUtils.toFXImage(screen, null);
+            
+                ViewController view = ScreenController.getController("view");
 
-                //     view.setScreen(image);
-                    
-                // } 
+                BufferedImage screen = getScreenFrom(connection);
+                WritableImage image = SwingFXUtils.toFXImage(screen, null);
+                view.setScreen(image);
+
                 
 
             } catch (IOException | InterruptedException e) {

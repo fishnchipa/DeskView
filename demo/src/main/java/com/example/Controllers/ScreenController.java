@@ -3,7 +3,9 @@ package com.example.Controllers;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javafx.fxml.FXML;
+import com.example.Server;
+
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,9 +34,9 @@ public class ScreenController {
         }
     }
 
-    public static void activate(String name, Object lock) {
+    public static void activate(String name, Server server) {
         FXMLLoader loader = screenMap.get(name);
-        PermissionController permissionController = new PermissionController(lock);
+        PermissionController permissionController = new PermissionController(server);
         try {
             loader.setController(permissionController);
             Parent root = loader.load();
@@ -45,4 +47,8 @@ public class ScreenController {
         }
     }
 
+    public static <T> T getController(String name) {
+        FXMLLoader loader = screenMap.get(name);
+        return loader.getController();
+    }
 } 
