@@ -1,5 +1,6 @@
 package com.example.Controllers;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
@@ -27,18 +28,16 @@ public class PermissionController {
     }
 
     public void accept(ActionEvent event) {
-        Socket connection = Server.getSocket();
 
-        
         System.out.println("Accepted");
         System.out.println("Loading Screen");
         ScreenController.activate("view");
-
+        BufferedOutputStream writer = Server.getOutputStream();
         // Sending confirmation to Client
         try {
 
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(1);
+            writer.flush();
             System.out.println("Confirmation Sent");
 
         } catch (IOException e) {
@@ -52,11 +51,10 @@ public class PermissionController {
     }
 
     public void decline(ActionEvent event) {
-        Socket connection = Server.getSocket();
+        BufferedOutputStream writer = Server.getOutputStream();
         ScreenController.activate("start");
 
         try {
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(0);
             writer.close();
 

@@ -3,6 +3,7 @@ package com.example;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -29,6 +30,9 @@ public class Server implements Runnable {
     private static Socket connection;
     public Object lock;
 
+    private static BufferedInputStream input;
+    private static BufferedOutputStream output;
+
     public Server(Object lock) {
         this.lock = lock;
     }
@@ -41,7 +45,9 @@ public class Server implements Runnable {
             //while (true) {
             try {
                 connection = socket.accept();
-    
+                
+                input = new BufferedInputStream(connection.getInputStream());
+                output = new BufferedOutputStream(connection.getOutputStream());
 
                 // Permission for connection
                 System.out.println("Waiting Acception");
@@ -52,16 +58,8 @@ public class Server implements Runnable {
                 }
             
                 ViewController view = ScreenController.getController("view");
+                System.out.println(input.read());
 
-                // BufferedImage screen = getScreenFrom(connection);
-                // WritableImage image = SwingFXUtils.toFXImage(screen, null);
-                // view.setScreen(image);
-                while (true) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    System.out.println(reader.readLine());
-                    
-                }
-                
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
@@ -73,8 +71,12 @@ public class Server implements Runnable {
         }
     }
 
-    public static Socket getSocket() {
-        return connection;
+    public static BufferedInputStream getInputStream() {
+        return input;
+    }
+
+    public static BufferedOutputStream getOutputStream() {
+        return output;
     }
 
 

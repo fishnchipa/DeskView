@@ -4,9 +4,9 @@ import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 
 
@@ -16,13 +16,14 @@ import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
 public class Client {
+    private BufferedInputStream input;
+    private BufferedOutputStream output;
 
-    /*
-     * Checks if connection is valid
-     */
     public Socket connectToServer(String ip) { 
         try {
             Socket socket = new Socket(ip, 8080);
+            input = new BufferedInputStream(socket.getInputStream());
+            output = new BufferedOutputStream(socket.getOutputStream());
             return socket;
         } catch (IOException e) {
             System.exit(1);
@@ -31,8 +32,8 @@ public class Client {
     }
 
     public boolean receivePermission(Socket socket) {
-        try (InputStreamReader reader = new InputStreamReader(socket.getInputStream())) {
-            if (reader.read() == 1) {
+        try {
+            if (input.read() == 1) {
                 System.out.println("Successful Connection");
                 return true;
             }
@@ -45,18 +46,27 @@ public class Client {
 
     public void sendScreen(Socket socket) {
         try {
-            BufferedOutputStream os = new BufferedOutputStream(socket.getOutputStream());
+    
             while (true) {
                 Robot r = new Robot();
                 Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
                 BufferedImage screen = r.createScreenCapture(new Rectangle((int) screenBounds.getWidth(), (int) screenBounds.getHeight()));
 
-                ImageIO.write(screen, "png", os);
-                os.flush();
+                ImageIO.write(screen, "png", output);
+                output.flush();
                 System.out.print("Frame Sent");
             }
         } catch (AWTException | IOException e) {
 
+            e.printStackTrace();
+        }
+    }
+
+    public void write(int data) {
+        try {
+            output.write(data);
+            output.flush();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

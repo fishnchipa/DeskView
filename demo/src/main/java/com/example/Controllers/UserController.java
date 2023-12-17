@@ -42,6 +42,7 @@ public class UserController {
     private Socket socket;
 
 
+
     public void initialize() {
 
         DatagramSocket datagramSocket;
@@ -71,18 +72,12 @@ public class UserController {
                 System.out.println("Successfully Connected to Server");
                 ScreenController.activate("capture");
                 // client.sendScreen(socket);
-
-                for (int i = 0; i < 100; i++) {
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                    writer.write(i);
-                    writer.newLine();
-                    writer.flush();
-                }
+                client.write(8008);
             }
-
-
+            
         } catch (IOException e) {
             System.out.println("Failed to Connect");
+            System.exit(1);
         } 
     }
 
