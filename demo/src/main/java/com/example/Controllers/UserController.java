@@ -1,6 +1,8 @@
 package com.example.Controllers;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -69,6 +71,13 @@ public class UserController {
                 System.out.println("Successfully Connected to Server");
                 ScreenController.activate("capture");
                 // client.sendScreen(socket);
+
+                for (int i = 0; i < 100; i++) {
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    writer.write(i);
+                    writer.newLine();
+                    writer.flush();
+                }
             }
 
 

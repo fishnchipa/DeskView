@@ -44,15 +44,15 @@ public class Client {
     public void sendScreen(Socket socket) {
         try {
             BufferedOutputStream os = new BufferedOutputStream(socket.getOutputStream());
-            //while (true) {
-            Robot r = new Robot();
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            BufferedImage screen = r.createScreenCapture(new Rectangle((int) screenBounds.getWidth(), (int) screenBounds.getHeight()));
+            while (true) {
+                Robot r = new Robot();
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                BufferedImage screen = r.createScreenCapture(new Rectangle((int) screenBounds.getWidth(), (int) screenBounds.getHeight()));
 
-            ImageIO.write(screen, "png", os);
-            os.flush();
-            System.out.print("Frame Sent");
-            //}
+                ImageIO.write(screen, "png", os);
+                os.flush();
+                System.out.print("Frame Sent");
+            }
         } catch (AWTException | IOException e) {
 
             e.printStackTrace();

@@ -3,8 +3,10 @@ package com.example;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -51,10 +53,14 @@ public class Server implements Runnable {
             
                 ViewController view = ScreenController.getController("view");
 
-                BufferedImage screen = getScreenFrom(connection);
-                WritableImage image = SwingFXUtils.toFXImage(screen, null);
-                view.setScreen(image);
-
+                // BufferedImage screen = getScreenFrom(connection);
+                // WritableImage image = SwingFXUtils.toFXImage(screen, null);
+                // view.setScreen(image);
+                while (true) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    System.out.println(reader.readLine());
+                    
+                }
                 
 
             } catch (IOException | InterruptedException e) {
