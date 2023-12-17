@@ -20,12 +20,13 @@ public class PermissionController extends User{
     @FXML
     private Button declining;
 
-    private ScreenController screenController = new ScreenController();
+
 
     public void accept(ActionEvent event) {
         Socket connection = Server.getSocket();
         System.out.println("Accepted");
-        screenController.activate("view");
+        ScreenController.activate("view");
+
         // Sending confirmation to Client
         try {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
@@ -44,7 +45,8 @@ public class PermissionController extends User{
 
     public void decline(ActionEvent event) {
         Socket connection = Server.getSocket();
-        screenController.activate("start");
+        ScreenController.activate("start");
+        
         try {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(0);

@@ -39,7 +39,6 @@ public class UserController {
 
     private Socket socket;
 
-    private ScreenController screenController = new ScreenController();
 
     public void initialize() {
 
@@ -68,8 +67,8 @@ public class UserController {
 
             if(client.receivePermission(socket)) {
                 System.out.println("Successfully Connected to Server");
-                screenController.activate("capture");
-                client.sendScreen(socket);
+                ScreenController.activate("capture");
+                // client.sendScreen(socket);
             }
 
 

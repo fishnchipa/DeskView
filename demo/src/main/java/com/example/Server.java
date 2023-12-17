@@ -25,8 +25,6 @@ import javafx.scene.image.WritableImage;
 public class Server extends User implements Runnable {
     private static ServerSocket socket;
     private static Socket connection;
-    private ScreenController screenController = new ScreenController();
-    private FXMLLoader loader;
 
     public void run() {
         try {
@@ -40,27 +38,22 @@ public class Server extends User implements Runnable {
 
                 // Permission for connection
                 System.out.println("Waiting Acception");
-                screenController.activate("permission");
+                ScreenController.activate("permission");
 
                 synchronized(this) {
                     wait();
                 }
                 
                 System.out.println("Loading Screen");
-
-
-                screenController.activate("view");
-                loader = screenController.getLoader();
-                ViewController view = (ViewController) loader.getController();
-
+                ScreenController.activate("view");
                 // Begin recieving Images
-                while (true) {
-                    BufferedImage screen = getScreenFrom(connection);
-                    WritableImage image = SwingFXUtils.toFXImage(screen, null);
+                // while (true) {
+                //     BufferedImage screen = getScreenFrom(connection);
+                //     WritableImage image = SwingFXUtils.toFXImage(screen, null);
 
-                    view.setScreen(image);
+                //     view.setScreen(image);
                     
-                } 
+                // } 
                 
 
             } catch (IOException | InterruptedException e) {
