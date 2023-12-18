@@ -2,8 +2,8 @@ package com.example;
 
 import java.awt.AWTException;
 import java.awt.Rectangle;
-import java.awt.Robot;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,7 +13,10 @@ import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.WritableImage;
+import javafx.scene.robot.Robot;
 import javafx.stage.Screen;
 
 public class Client {
@@ -38,7 +41,6 @@ public class Client {
 
     public boolean receivePermission() {
         try {
-            System.out.println("hi");
             if (input.read() == 1) {
                 System.out.println("Successful Connection");
                 return true;
@@ -56,19 +58,22 @@ public class Client {
             Robot r = new Robot();
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            while (true) {
-                BufferedImage screen = r.createScreenCapture(new Rectangle((int) screenBounds.getWidth(), (int) screenBounds.getHeight()));
 
-                ImageIO.write(screen, "png", byteArrayOutputStream);
-                byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
+            
+            WritableImage screen = r.getScreenCapture(null, screenBounds);
+            BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
 
-                output.write(size);
-                output.write(byteArrayOutputStream.toByteArray());
-                output.flush();
+            ImageIO.write(image, "png", byteArrayOutputStream);
+            
+            byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
 
-                System.out.print("Frame Sent");
-            }
-        } catch (AWTException | IOException e) {
+            output.write(size);
+            output.write(byteArrayOutputStream.toByteArray());
+            output.flush();
+
+            System.out.print("Frame Sent");
+
+        } catch (IOException e) {
 
             e.printStackTrace();
         }

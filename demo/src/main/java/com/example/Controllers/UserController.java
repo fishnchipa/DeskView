@@ -65,7 +65,7 @@ public class UserController {
         if(client.receivePermission()) {
             System.out.println("Successfully Connected to Server");
             ScreenController.activate("capture");
-
+            System.out.println("sending images");
             client.sendScreen();
         } 
     }
