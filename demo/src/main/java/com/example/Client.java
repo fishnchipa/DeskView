@@ -6,9 +6,10 @@ import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-
+import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
 
@@ -58,8 +59,14 @@ public class Client {
                 Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
                 BufferedImage screen = r.createScreenCapture(new Rectangle((int) screenBounds.getWidth(), (int) screenBounds.getHeight()));
 
-                ImageIO.write(screen, "png", output);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                ImageIO.write(screen, "png", byteArrayOutputStream);
+                byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
+
+                output.write(size);
+                output.write(byteArrayOutputStream.toByteArray());
                 output.flush();
+
                 System.out.print("Frame Sent");
             }
         } catch (AWTException | IOException e) {

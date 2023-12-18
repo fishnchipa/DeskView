@@ -4,10 +4,12 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
 
@@ -50,12 +52,7 @@ public class Server implements Runnable {
                 }
             
                 ViewController view = ScreenController.getController("view");
-                int value = 0;
-                while (value != 99) {
-                    value = input.read();
-                    System.out.println(value);
-                }
-
+                
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
@@ -79,10 +76,16 @@ public class Server implements Runnable {
 
     public BufferedImage getScreenFrom(Socket socket) {
         BufferedImage image = null;
+        byte[] sizeAr = new byte[4];
         
         try {
-            BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
-            image = ImageIO.read(input);
+            input.read(sizeAr);
+            int size = ByteBuffer.wrap(sizeAr).asIntBuffer().get();
+            byte[] imageAr = new byte[size];
+            input.read(imageAr);
+
+            image = ImageIO.read(new ByteArrayInputStream(imageAr));
+            return image;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,7 +106,6 @@ public class Server implements Runnable {
             e.printStackTrace();
         }
     }
-
 
 
     public static void close() {
