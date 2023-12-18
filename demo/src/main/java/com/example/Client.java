@@ -8,6 +8,8 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
@@ -20,16 +22,16 @@ import javafx.scene.robot.Robot;
 import javafx.stage.Screen;
 
 public class Client {
-    private BufferedInputStream input;
-    private BufferedOutputStream output;
+    private InputStream input;
+    private OutputStream output;
 
     private Socket socket;
 
     public void connectToServer(String ip) { 
         try {
-            socket = new Socket(ip, 8080);
-            input = new BufferedInputStream(socket.getInputStream());
-            output = new BufferedOutputStream(socket.getOutputStream());
+            socket = new Socket(ip, 1234);
+            input = socket.getInputStream();
+            output = socket.getOutputStream();
 
             System.out.println("Processing connection" + " " + ip);
 
@@ -66,11 +68,14 @@ public class Client {
             ImageIO.write(image, "png", byteArrayOutputStream);
             
             byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
-
+            System.out.println(byteArrayOutputStream.size());
             output.write(size);
-            output.write(byteArrayOutputStream.toByteArray());
-            output.flush();
-
+            byte[] byteImage = byteArrayOutputStream.toByteArray();
+            for (int i = 0; i < byteArrayOutputStream.size(); i++) {
+                output.write(byteImage[i] + 127);
+                output.flush();
+            }
+            
             System.out.print("Frame Sent");
 
         } catch (IOException e) {

@@ -43,6 +43,7 @@ public class User extends Application{
 
             primaryStage.setScene(scene);
             primaryStage.show();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

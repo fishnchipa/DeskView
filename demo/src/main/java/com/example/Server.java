@@ -5,11 +5,13 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+
 
 import javax.imageio.ImageIO;
 
@@ -36,7 +38,7 @@ public class Server implements Runnable {
 
     public void run() {
         try {
-            socket = new ServerSocket(8080);
+            socket = new ServerSocket(1234);
             
             // Continously listens to connetion event after disconnection
             //while (true) {
@@ -55,11 +57,11 @@ public class Server implements Runnable {
                 }
             
                 ViewController view = ScreenController.getController("view");
-                while (true) {
-                    BufferedImage screen = getScreenFrom();
-                    Image image = SwingFXUtils.toFXImage(screen, null);
-                    view.setScreen(image);
-                }
+
+                BufferedImage screen = getScreenFrom();
+                Image image = SwingFXUtils.toFXImage(screen, null);
+                view.setScreen(image);
+
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
@@ -84,14 +86,17 @@ public class Server implements Runnable {
     private BufferedImage getScreenFrom() {
         BufferedImage image = null;
         byte[] sizeAr = new byte[4];
-        
+        ByteArrayOutputStream arrayOutput = new ByteArrayOutputStream();
         try {
             input.read(sizeAr);
             int size = ByteBuffer.wrap(sizeAr).asIntBuffer().get();
             byte[] imageAr = new byte[size];
-            input.read(imageAr);
+            for (int i = 0; i < size; i++) {
+                imageAr[i] = (byte) (input.read() - 127);
+            }
 
-            image = ImageIO.read(new ByteArrayInputStream(imageAr));
+            arrayOutput.write(imageAr);
+            ImageIO.write(image, "png", arrayOutput);
             return image;
         } catch (IOException e) {
             e.printStackTrace();
