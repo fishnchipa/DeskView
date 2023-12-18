@@ -92,6 +92,7 @@ public class Server implements Runnable {
         byte[] sizeAr = new byte[4];
         
         try {
+            input.read(sizeAr);
             int size = ByteBuffer.wrap(sizeAr).asIntBuffer().get();
             byte[] imageAr = new byte[size];
             

@@ -60,7 +60,7 @@ public class Client {
             Robot r = new Robot();
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
-            
+
             WritableImage screen = r.getScreenCapture(null, screenBounds);
             BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
 
@@ -71,16 +71,17 @@ public class Client {
             byte[] byteImage = byteArrayOutputStream.toByteArray();
 
             output.write(size);
-            
+
             for (int i = 0; i < byteArrayOutputStream.size(); i++) {
                 output.write(byteImage[i] + 127);
                 output.flush();
             }
-
-            System.out.print("Frame Sent");
+            
+            System.out.println("Frame Sent");
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Server Closed Connection");
+            System.exit(0);
         }
     }
 

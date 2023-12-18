@@ -72,8 +72,9 @@ public class UserController {
             ScreenController.activate("capture");
             System.out.println("sending images");
 
+
             Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1), 
+                new KeyFrame(Duration.millis(20), 
                 Event -> {client.sendScreen();})
             );
 
