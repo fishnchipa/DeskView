@@ -16,6 +16,9 @@ import javax.imageio.ImageIO;
 import com.example.Controllers.ScreenController;
 import com.example.Controllers.ViewController;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
 
 
 
@@ -52,7 +55,11 @@ public class Server implements Runnable {
                 }
             
                 ViewController view = ScreenController.getController("view");
-                
+                while (true) {
+                    BufferedImage screen = getScreenFrom();
+                    Image image = SwingFXUtils.toFXImage(screen, null);
+                    view.setScreen(image);
+                }
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
@@ -74,7 +81,7 @@ public class Server implements Runnable {
 
 
 
-    public BufferedImage getScreenFrom(Socket socket) {
+    private BufferedImage getScreenFrom() {
         BufferedImage image = null;
         byte[] sizeAr = new byte[4];
         

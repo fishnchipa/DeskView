@@ -51,15 +51,14 @@ public class Client {
         return false;
     }
 
-    public void sendScreen(Socket socket) {
+    public void sendScreen() {
         try {
-    
+            Robot r = new Robot();
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             while (true) {
-                Robot r = new Robot();
-                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
                 BufferedImage screen = r.createScreenCapture(new Rectangle((int) screenBounds.getWidth(), (int) screenBounds.getHeight()));
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 ImageIO.write(screen, "png", byteArrayOutputStream);
                 byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
 

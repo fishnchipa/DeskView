@@ -65,10 +65,8 @@ public class UserController {
         if(client.receivePermission()) {
             System.out.println("Successfully Connected to Server");
             ScreenController.activate("capture");
-            // client.sendScreen(socket);
-            for (int i = 0; i < 100; i++) {
-                client.write(i);
-            } 
+
+            client.sendScreen();
         } 
     }
 
