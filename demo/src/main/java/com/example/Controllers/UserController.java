@@ -74,7 +74,7 @@ public class UserController {
 
 
             Timeline timeline = new Timeline(
-                new KeyFrame(Duration.millis(20), 
+                new KeyFrame(Duration.millis(50), 
                 Event -> {client.sendScreen();})
             );
 

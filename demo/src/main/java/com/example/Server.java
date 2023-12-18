@@ -100,7 +100,7 @@ public class Server implements Runnable {
                 imageAr[i] = (byte) (input.read() - 127);
             }
 
-            ByteArrayInputStream arrayInput = new  ByteArrayInputStream(imageAr);
+            ByteArrayInputStream arrayInput = new ByteArrayInputStream(imageAr);
             image = ImageIO.read(arrayInput);
 
             return image;
