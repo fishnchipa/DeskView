@@ -59,27 +59,27 @@ public class Client {
         try {
             Robot r = new Robot();
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
             
             WritableImage screen = r.getScreenCapture(null, screenBounds);
             BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
 
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ImageIO.write(image, "png", byteArrayOutputStream);
-            
+
             byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
-            System.out.println(byteArrayOutputStream.size());
-            output.write(size);
             byte[] byteImage = byteArrayOutputStream.toByteArray();
+
+            output.write(size);
+            
             for (int i = 0; i < byteArrayOutputStream.size(); i++) {
                 output.write(byteImage[i] + 127);
                 output.flush();
             }
-            
+
             System.out.print("Frame Sent");
 
         } catch (IOException e) {
-
             e.printStackTrace();
         }
     }

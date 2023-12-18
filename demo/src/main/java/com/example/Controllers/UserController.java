@@ -12,12 +12,16 @@ import java.net.UnknownHostException;
 import com.example.Client;
 import com.example.Server;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class UserController {
     
@@ -64,9 +68,18 @@ public class UserController {
 
         if(client.receivePermission()) {
             System.out.println("Successfully Connected to Server");
+
             ScreenController.activate("capture");
             System.out.println("sending images");
-            client.sendScreen();
+
+            Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), 
+                Event -> {client.sendScreen();})
+            );
+
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+    
         } 
     }
 

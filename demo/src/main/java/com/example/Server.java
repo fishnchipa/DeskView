@@ -58,9 +58,13 @@ public class Server implements Runnable {
             
                 ViewController view = ScreenController.getController("view");
 
-                BufferedImage screen = getScreenFrom();
-                Image image = SwingFXUtils.toFXImage(screen, null);
-                view.setScreen(image);
+                while (true) {
+                    BufferedImage screen = getScreenFrom();
+                    System.out.println("Image Recieved");
+
+                    Image image = SwingFXUtils.toFXImage(screen, null);
+                    view.setScreen(image);
+                }
 
 
             } catch (IOException | InterruptedException e) {
@@ -86,17 +90,18 @@ public class Server implements Runnable {
     private BufferedImage getScreenFrom() {
         BufferedImage image = null;
         byte[] sizeAr = new byte[4];
-        ByteArrayOutputStream arrayOutput = new ByteArrayOutputStream();
+        
         try {
-            input.read(sizeAr);
             int size = ByteBuffer.wrap(sizeAr).asIntBuffer().get();
             byte[] imageAr = new byte[size];
+            
             for (int i = 0; i < size; i++) {
                 imageAr[i] = (byte) (input.read() - 127);
             }
 
-            arrayOutput.write(imageAr);
-            ImageIO.write(image, "png", arrayOutput);
+            ByteArrayInputStream arrayInput = new  ByteArrayInputStream(imageAr);
+            image = ImageIO.read(arrayInput);
+
             return image;
         } catch (IOException e) {
             e.printStackTrace();
