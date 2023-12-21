@@ -1,9 +1,6 @@
 package com.example;
 
-import java.awt.AWTException;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.image.BufferedImage;
+
 import java.io.IOException;
 
 import com.example.Controllers.ScreenController;
@@ -11,9 +8,12 @@ import com.example.Controllers.UserController;
 
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
@@ -44,6 +44,7 @@ public class User extends Application{
             primaryStage.setScene(scene);
             primaryStage.show();
             
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,12 +54,9 @@ public class User extends Application{
 
     public static void main( String[] args )
     {
-        Object lock = new Object();
-        server = new Server(lock);
+        server = new Server();
         Thread serverThread = new Thread(server);
         serverThread.start();
-
-
 
         launch();
     }
