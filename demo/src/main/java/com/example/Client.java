@@ -77,7 +77,7 @@ public class Client {
                 output.flush();
             }
             
-            System.out.println("Frame Sent");
+            System.out.println("Frame Sent: Height: " + screenBounds.getHeight() + " Width: " + screenBounds.getWidth());
 
         } catch (IOException e) {
             System.out.println("Server Closed Connection");
