@@ -51,4 +51,8 @@ public class ScreenController {
         FXMLLoader loader = screenMap.get(name);
         return loader.getController();
     }
+
+    public static Scene getScene() {
+        return main;
+    }
 } 

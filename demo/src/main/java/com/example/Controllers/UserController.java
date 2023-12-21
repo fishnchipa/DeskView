@@ -71,16 +71,11 @@ public class UserController {
 
             ScreenController.activate("capture");
             System.out.println("sending images");
+            
+            while (true) {
+                client.sendScreen();
+            }
 
-
-            Timeline timeline = new Timeline(
-                new KeyFrame(Duration.millis(50), 
-                Event -> {client.sendScreen();})
-            );
-
-            timeline.setCycleCount(Animation.INDEFINITE);
-            timeline.play();
-    
         } 
     }
 
