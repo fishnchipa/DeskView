@@ -27,14 +27,8 @@ import javafx.scene.image.Image;
 public class Server implements Runnable {
     private static ServerSocket socket;
     private static Socket connection;
-    public Object lock;
-
     private static BufferedInputStream input;
     private static BufferedOutputStream output;
-
-    public Server(Object lock) {
-        this.lock = lock;
-    }
 
     public void run() {
         try {
@@ -110,33 +104,5 @@ public class Server implements Runnable {
         return image;
     }
 
-
-
-    public void sendKeyEvent(Socket socket, int key) {
-        try {
-            OutputStreamWriter input = new OutputStreamWriter(socket.getOutputStream());
-            BufferedWriter bufferedWriter = new BufferedWriter(input);
-
-            bufferedWriter.write(key);
-            bufferedWriter.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public static void close() {
-        if (socket.isClosed()) {
-            return;
-        } else {
-            try {
-                socket.close();
-                System.out.println("Closing Server");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 }
