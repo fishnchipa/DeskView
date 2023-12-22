@@ -52,7 +52,6 @@ public class Server implements Runnable {
 
                 while (true) {
                     BufferedImage screen = getScreenFrom();
-                    System.out.println("Image Recieved");
 
                     Image image = SwingFXUtils.toFXImage(screen, null);
                     view.setScreen(image);
@@ -95,6 +94,7 @@ public class Server implements Runnable {
     public static void sendEvent(int key) {
         try {
             output.write(key);
+            output.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
