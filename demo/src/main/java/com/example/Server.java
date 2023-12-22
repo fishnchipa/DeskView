@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -92,8 +93,10 @@ public class Server implements Runnable {
     }
 
     public static void sendEvent(int key) {
+        byte[] keyArray =  ByteBuffer.allocate(4).putInt(key).array();
+
         try {
-            output.write(key);
+            output.write(keyArray);
             output.flush();
         } catch (IOException e) {
             e.printStackTrace();
