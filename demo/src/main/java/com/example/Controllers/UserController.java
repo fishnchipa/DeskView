@@ -10,6 +10,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import com.example.Client;
+import com.example.HandleClientEvent;
 import com.example.Server;
 
 import javafx.animation.Animation;
@@ -72,10 +73,13 @@ public class UserController {
             ScreenController.activate("capture");
             System.out.println("sending images");
             
-            while (true) {
-                client.sendScreen();
-            }
+            // Thread for sending events
+            HandleClientEvent clientHandler = new HandleClientEvent(client);
+            Thread clientHandlerThread = new Thread(clientHandler);
+            clientHandlerThread.start();
 
+            // Sending screen capture
+            client.sendScreen();
         } 
     }
 
@@ -83,8 +87,4 @@ public class UserController {
         System.exit(0);
     }
 
-    public void test() {
-        System.out.println("Exiting");
-        System.exit(0);
-    }
 }

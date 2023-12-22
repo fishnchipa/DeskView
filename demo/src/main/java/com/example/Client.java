@@ -1,14 +1,11 @@
 package com.example;
 
-import java.awt.AWTException;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -58,26 +55,27 @@ public class Client {
     public void sendScreen() {
         try {
             Robot r = new Robot();
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            Rectangle2D screenBounds = new Rectangle2D(0, 0, 800, 600);
 
-
-            WritableImage screen = r.getScreenCapture(null, screenBounds);
-            BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
-
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", byteArrayOutputStream);
-
-            byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
-            byte[] byteImage = byteArrayOutputStream.toByteArray();
-
-            output.write(size);
-
-            for (int i = 0; i < byteArrayOutputStream.size(); i++) {
-                output.write(byteImage[i] + 127);
-                output.flush();
+            while (true) {
+                WritableImage screen = r.getScreenCapture(null, screenBounds, true);
+                BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
+    
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                ImageIO.write(image, "png", byteArrayOutputStream);
+    
+                byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
+                byte[] byteImage = byteArrayOutputStream.toByteArray();
+    
+                output.write(size);
+    
+                for (int i = 0; i < byteArrayOutputStream.size(); i++) {
+                    output.write(byteImage[i] + 127);
+                    output.flush();
+                }
+                
+                System.out.println("Frame Sent: Height: " + screenBounds.getHeight() + " Width: " + screenBounds.getWidth());
             }
-            
-            System.out.println("Frame Sent: Height: " + screenBounds.getHeight() + " Width: " + screenBounds.getWidth());
 
         } catch (IOException e) {
             System.out.println("Server Closed Connection");
@@ -85,12 +83,7 @@ public class Client {
         }
     }
 
-    public void write(int data) {
-        try {
-            output.write(data);
-            output.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public int receiveEvent() throws IOException {
+        return input.read();
     }
 }

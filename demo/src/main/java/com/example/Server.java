@@ -3,11 +3,8 @@ package com.example;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -20,6 +17,7 @@ import com.example.Controllers.ViewController;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+
 
 
 
@@ -71,16 +69,6 @@ public class Server implements Runnable {
         }
     }
 
-    public static BufferedInputStream getInputStream() {
-        return input;
-    }
-
-    public static BufferedOutputStream getOutputStream() {
-        return output;
-    }
-
-
-
     private BufferedImage getScreenFrom() {
         BufferedImage image = null;
         byte[] sizeAr = new byte[4];
@@ -104,5 +92,21 @@ public class Server implements Runnable {
         return image;
     }
 
+    public static void sendEvent(int key) {
+        try {
+            output.write(key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static BufferedInputStream getInputStream() {
+        return input;
+    }
+
+    public static BufferedOutputStream getOutputStream() {
+        return output;
+    }
 
 }

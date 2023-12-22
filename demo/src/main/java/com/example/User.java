@@ -4,16 +4,12 @@ package com.example;
 import java.io.IOException;
 
 import com.example.Controllers.ScreenController;
-import com.example.Controllers.UserController;
 
 import javafx.application.Application;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
@@ -43,8 +39,16 @@ public class User extends Application{
 
             primaryStage.setScene(scene);
             primaryStage.show();
-            
 
+            scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+                    System.out.println((int) event.getScreenX());
+                    System.out.println((int) event.getScreenY());
+                }
+                
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
