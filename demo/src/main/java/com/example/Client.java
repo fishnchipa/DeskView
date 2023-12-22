@@ -84,7 +84,10 @@ public class Client {
     }
 
     public int receiveEvent() throws IOException {
-        return input.read();
+        byte[] keyArray = new byte[4];
+        input.read(keyArray);
+        int key = ByteBuffer.wrap(keyArray).asIntBuffer().get();
+        return key;
     }
 
     public boolean isConnected() {
