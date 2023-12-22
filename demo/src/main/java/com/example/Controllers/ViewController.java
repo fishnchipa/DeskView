@@ -21,10 +21,11 @@ public class ViewController {
     public void initialize() {
         Scene scene = ScreenController.getScene();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            
+        
             @Override
             public void handle(KeyEvent event) {
                 Server.sendEvent(event.getCode().getCode());
+                System.out.println("Key Sent: " + event.getText());
             }
         });
         scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -34,6 +35,7 @@ public class ViewController {
                 Server.sendEvent(event.getButton().ordinal());
                 Server.sendEvent((int) event.getScreenX());
                 Server.sendEvent((int) event.getScreenY());
+                System.out.println("Mouse Sent: " + event.getButton().toString() + " x: " + event.getScreenX() + " y: " + event.getScreenY());
             }
             
         });
