@@ -2,9 +2,10 @@ package com.example;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.io.IOException;
 
-import javafx.scene.input.KeyCode;
+
 
 
 public class HandleClientEvent implements Runnable {
@@ -25,20 +26,36 @@ public class HandleClientEvent implements Runnable {
     public void run() {
         while (true) {
             try {
+            
                 int key = client.receiveEvent();
                 if (key > 3 ) {
-                    // Keyboard Event
 
+                    // Keyboard Event
                     robot.keyPress(key);
                     robot.keyRelease(key);
+
+                    System.out.println((char) key);
                 } else {
+
                     // Mouse Event
                     int x = client.receiveEvent();
                     int y = client.receiveEvent();
 
                     robot.mouseMove(x, y);
-                    robot.mousePress(key);
-                    robot.mouseRelease(key);
+
+                    if (key == 1) {
+                        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                        System.out.println("Primary Key");
+                    } else if (key == 2) {
+                        robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
+                        robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
+                        System.out.println("Secondary Key");
+                    } else {
+                        robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+                        robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+                        System.out.println("Middle Key");
+                    }
                 }
                 System.out.println("Key pressed: " + key);
             } catch (IOException e) {
