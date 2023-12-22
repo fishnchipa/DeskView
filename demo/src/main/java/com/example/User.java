@@ -1,6 +1,9 @@
 package com.example;
 
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.io.IOException;
 
 import com.example.Controllers.ScreenController;
@@ -40,15 +43,6 @@ public class User extends Application{
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-                @Override
-                public void handle(MouseEvent event) {
-                    System.out.println((int) event.getScreenX());
-                    System.out.println((int) event.getScreenY());
-                }
-                
-            });
         } catch (IOException e) {
             e.printStackTrace();
         }
