@@ -55,7 +55,8 @@ public class Client {
     public void sendScreen() {
         try {
             Robot r = new Robot();
-            Rectangle2D screenBounds = new Rectangle2D(0, 0, 800, 600);
+            // Rectangle2D screenBounds = new Rectangle2D(0, 0, 800, 600);
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
             while (true) {
                 WritableImage screen = r.getScreenCapture(null, screenBounds, true);
@@ -74,7 +75,6 @@ public class Client {
                     output.flush();
                 }
                 
-                System.out.println("Frame Sent: Height: " + screenBounds.getHeight() + " Width: " + screenBounds.getWidth());
             }
 
         } catch (IOException e) {
@@ -85,5 +85,9 @@ public class Client {
 
     public int receiveEvent() throws IOException {
         return input.read();
+    }
+
+    public boolean isConnected() {
+        return socket.isConnected();
     }
 }
