@@ -9,11 +9,13 @@ import com.example.Server;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 
 public class ScreenController {
     private static HashMap<String, FXMLLoader> screenMap = new HashMap<>();
     private static Scene main;
+    private static Stage primaryStage;
 
     public ScreenController(Scene scene) {
         ScreenController.main = scene;
@@ -55,4 +57,13 @@ public class ScreenController {
     public static Scene getScene() {
         return main;
     }
+
+    public static void setStage(Stage stage) {
+        primaryStage = stage;
+    }
+
+    public static void setFullScreen() {
+        primaryStage.setFullScreen(true);
+    }
+
 } 

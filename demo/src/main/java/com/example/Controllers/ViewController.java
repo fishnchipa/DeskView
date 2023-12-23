@@ -20,15 +20,9 @@ public class ViewController {
     @FXML 
     private ImageView screen;
 
-
-    public ViewController() {
-        Stage stage = (Stage) screen.getScene().getWindow();
-        stage.setFullScreen(true);
-    }
-
     public void initialize() {
         Scene scene = ScreenController.getScene();
-
+        ScreenController.setFullScreen();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
             @Override
