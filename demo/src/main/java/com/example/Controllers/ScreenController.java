@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 public class ScreenController {
     private static HashMap<String, FXMLLoader> screenMap = new HashMap<>();
     private static Scene main;
-    private static Stage primaryStage;
 
     public ScreenController(Scene scene) {
         ScreenController.main = scene;
@@ -30,6 +29,7 @@ public class ScreenController {
         
         try {
             Parent root = loader.load();
+
             main.setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,7 +42,7 @@ public class ScreenController {
         try {
             loader.setController(permissionController);
             Parent root = loader.load();
-            
+
             main.setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,12 +58,5 @@ public class ScreenController {
         return main;
     }
 
-    public static void setStage(Stage stage) {
-        primaryStage = stage;
-    }
-
-    public static void setFullScreen() {
-        primaryStage.setFullScreen(true);
-    }
 
 } 
