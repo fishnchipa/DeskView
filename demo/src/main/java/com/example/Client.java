@@ -63,7 +63,7 @@ public class Client {
                 BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
     
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ImageIO.write(image, "png", byteArrayOutputStream);
+                ImageIO.write(image, "gif", byteArrayOutputStream);
     
                 byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
                 byte[] byteImage = byteArrayOutputStream.toByteArray();
