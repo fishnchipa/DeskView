@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -20,9 +21,12 @@ public class ViewController {
     @FXML 
     private ImageView screen;
 
+    @FXML
+    private Button exit;
+
     public void initialize() {
         Scene scene = ScreenController.getScene();
-        Stage stage = (Stage) screen.getScene().getWindow();
+        Stage stage = (Stage) exit.getScene().getWindow();
         stage.setFullScreen(true);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
