@@ -53,9 +53,12 @@ public class ViewController {
             @Override
             public void handle(MouseEvent event) {
                 try {
+                    int x = (int) event.getScreenX() + MouseKey.ScreenOffset;
+                    int y = (int) event.getScreenY() + MouseKey.ScreenOffset;
                     Thread.sleep(200);
-                    Server.sendEvent((int) event.getScreenX() + MouseKey.ScreenOffset);
-                    Server.sendEvent((int) event.getScreenY() + MouseKey.ScreenOffset);
+                    Server.sendEvent(x);
+                    Server.sendEvent(y);
+                    System.out.println("Mouse moved to x: " + x + " y: " + y);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

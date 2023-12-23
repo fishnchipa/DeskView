@@ -65,7 +65,7 @@ public class HandleClientEvent implements Runnable {
                     } else {
                         int x = key - MouseKey.ScreenOffset;
                         int y = client.receiveEvent() - MouseKey.ScreenOffset;
-
+                        System.out.println("Moused Move to x: " + x + " y: " + y);
                         robot.mouseMove(x, y);
                     }
                 }
