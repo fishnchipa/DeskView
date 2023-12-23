@@ -34,7 +34,7 @@ public class ViewController {
             public void handle(MouseEvent event) {
                 Server.sendEvent(event.getButton().ordinal());
                 Server.sendEvent((int) event.getScreenX());
-                Server.sendEvent((int) event.getScreenY());
+                Server.sendEvent((int) event.getScreenY() - 40);
                 System.out.println("Mouse Sent: " + event.getButton().toString() + " x: " + event.getScreenX() + " y: " + event.getScreenY());
             }
             
