@@ -22,7 +22,6 @@ public class ViewController {
 
     public void initialize() {
         Scene scene = ScreenController.getScene();
-        ScreenController.setFullScreen();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
             @Override
