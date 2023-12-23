@@ -28,7 +28,7 @@ public class HandleClientEvent implements Runnable {
             try {
             
                 int key = client.receiveEvent();
-                if (key > 3 ) {
+                if (key < 1024 ) {
 
                     // Keyboard Event
                     robot.keyPress(key);
@@ -38,23 +38,35 @@ public class HandleClientEvent implements Runnable {
                 } else {
 
                     // Mouse Event
-                    int x = client.receiveEvent();
-                    int y = client.receiveEvent();
-
-                    robot.mouseMove(x, y);
-
-                    if (key == 1) {
+                    if (key == MouseKey.PrimaryMousePress) {
                         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-                        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-                        System.out.println("Primary Key");
-                    } else if (key == 2) {
+                        System.out.println("Primary Mouse Pressed");
+
+                    } else if (key == MouseKey.SecondaryMousePress) {
                         robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
-                        robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
-                        System.out.println("Secondary Key");
-                    } else {
+                        System.out.println("Secondary Mouse Pressed");
+
+                    } else if (key == MouseKey.MiddleMousePress) {
                         robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+                        System.out.println("Middle Mouse Pressed");
+
+                    } else if (key == MouseKey.PrimaryMouseRelease) {
+                        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                        System.out.println("Primary Mouse Released");
+
+                    } else if (key == MouseKey.SecondaryMouseRelease) {
+                        robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
+                        System.out.println("Primary Mouse released");
+
+                    } else if (key == MouseKey.MiddleMouseRelease) {
                         robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
-                        System.out.println("Middle Key");
+                        System.out.println("Primary Mouse released");
+
+                    } else {
+                        int x = key - MouseKey.ScreenOffset;
+                        int y = client.receiveEvent() - MouseKey.ScreenOffset;
+
+                        robot.mouseMove(x, y);
                     }
                 }
                 System.out.println("Key pressed: " + key);
