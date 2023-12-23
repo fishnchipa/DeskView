@@ -2,20 +2,25 @@ package com.example;
 
 
 import java.awt.AWTException;
-import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
 import com.example.Controllers.ScreenController;
+import com.example.Controllers.ViewController;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.WritableImage;
+import javafx.scene.robot.Robot;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 
 public class User extends Application{
 
@@ -44,40 +49,6 @@ public class User extends Application{
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-
-                @Override
-                public void handle(MouseEvent event) {
-
-                    // System.out.println("presesd " + event.getButton().name());
-                    System.out.println(InputEvent.BUTTON1_DOWN_MASK);
-                }
-
-                
-            });
-
-            // scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
-
-            //     @Override
-            //     public void handle(MouseEvent event) {
-            //         try {
-            //             Thread.sleep(200);
-            //             System.out.println("Dragging x: " + event.getScreenX() + " y: " + event.getScreenY());
-            //         } catch (InterruptedException e) {
-            //             e.printStackTrace();
-            //         }
-                    
-            //     }
-                
-            // });
-            // scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
-
-            //     @Override
-            //     public void handle(MouseEvent event) {
-            //         System.out.println("released " + event.getButton().name());
-            //     }
-                
-            // });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,6 +58,7 @@ public class User extends Application{
 
     public static void main( String[] args )
     {
+
         server = new Server();
         Thread serverThread = new Thread(server);
         serverThread.start();
