@@ -3,7 +3,6 @@ package com.example.Controllers;
 
 import com.example.MouseKey;
 import com.example.Server;
-import java.awt.event.InputEvent;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,6 +36,12 @@ public class ViewController {
             @Override
             public void handle(MouseEvent event) {
 
+                int x = (int) event.getScreenX() + MouseKey.ScreenOffset;
+                int y = (int) event.getScreenY() + MouseKey.ScreenOffset;
+                Server.sendEvent(x);
+                Server.sendEvent(y);
+                System.out.println("Mouse moved to x: " + x + " y: " + y);
+
                 String button = event.getButton().name();
                 if (button.equals("PRIMARY")) {
                     Server.sendEvent(MouseKey.PrimaryMousePress);
@@ -52,6 +57,7 @@ public class ViewController {
 
             @Override
             public void handle(MouseEvent event) {
+
                 try {
                     int x = (int) event.getScreenX() + MouseKey.ScreenOffset;
                     int y = (int) event.getScreenY() + MouseKey.ScreenOffset;
