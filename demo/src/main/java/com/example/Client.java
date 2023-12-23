@@ -59,7 +59,7 @@ public class Client {
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
             while (true) {
-                WritableImage screen = r.getScreenCapture(null, screenBounds, true);
+                WritableImage screen = r.getScreenCapture(null, screenBounds, false);
                 BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
     
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
