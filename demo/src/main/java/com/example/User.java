@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +44,40 @@ public class User extends Application{
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+
+                    // System.out.println("presesd " + event.getButton().name());
+                    System.out.println(InputEvent.BUTTON1_DOWN_MASK);
+                }
+
+                
+            });
+
+            // scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+            //     @Override
+            //     public void handle(MouseEvent event) {
+            //         try {
+            //             Thread.sleep(200);
+            //             System.out.println("Dragging x: " + event.getScreenX() + " y: " + event.getScreenY());
+            //         } catch (InterruptedException e) {
+            //             e.printStackTrace();
+            //         }
+                    
+            //     }
+                
+            // });
+            // scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
+
+            //     @Override
+            //     public void handle(MouseEvent event) {
+            //         System.out.println("released " + event.getButton().name());
+            //     }
+                
+            // });
         } catch (IOException e) {
             e.printStackTrace();
         }

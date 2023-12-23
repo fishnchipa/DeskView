@@ -1,7 +1,9 @@
 package com.example.Controllers;
 
 
+import com.example.MouseKey;
 import com.example.Server;
+import java.awt.event.InputEvent;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,6 +22,7 @@ public class ViewController {
 
     public void initialize() {
         Scene scene = ScreenController.getScene();
+
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
             @Override
@@ -28,14 +31,50 @@ public class ViewController {
                 System.out.println("Key Sent: " + event.getText());
             }
         });
-        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
-                Server.sendEvent(event.getButton().ordinal());
-                Server.sendEvent((int) event.getScreenX());
-                Server.sendEvent((int) event.getScreenY());
-                System.out.println("Mouse Sent: " + event.getButton().toString() + " x: " + event.getScreenX() + " y: " + event.getScreenY());
+
+                String button = event.getButton().name();
+                if (button.equals("PRIMARY")) {
+                    Server.sendEvent(MouseKey.PrimaryMousePress);
+                } else if (button.equals("SECONDARY")) {
+                    Server.sendEvent(MouseKey.SecondaryMousePress);
+                } else {
+                    Server.sendEvent(MouseKey.MiddleMousePress);
+                }
+            }
+        });
+
+        scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    Thread.sleep(200);
+                    Server.sendEvent((int) event.getScreenX() + MouseKey.ScreenOffset);
+                    Server.sendEvent((int) event.getScreenY() + MouseKey.ScreenOffset);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+
+                String button = event.getButton().name();
+                if (button.equals("PRIMARY")) {
+                    Server.sendEvent(MouseKey.PrimaryMouseRelease);
+                } else if (button.equals("SECONDARY")) {
+                    Server.sendEvent(MouseKey.SecondaryMouseRelease);
+                } else {
+                    Server.sendEvent(MouseKey.MiddleMouseRelease);
+                }
             }
             
         });
