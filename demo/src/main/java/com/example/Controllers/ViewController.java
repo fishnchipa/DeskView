@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 
 public class ViewController {
@@ -21,7 +22,8 @@ public class ViewController {
 
     public void initialize() {
         Scene scene = ScreenController.getScene();
-
+        Stage stage = (Stage) screen.getScene().getWindow();
+        stage.setFullScreen(true);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
             @Override
