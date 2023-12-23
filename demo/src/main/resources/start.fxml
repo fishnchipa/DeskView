@@ -7,12 +7,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" fx:controller="com.example.Controllers.UserController" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.UserController">
    <children>
       <Pane fx:id="main" layoutX="35.0" layoutY="72.0" prefHeight="57.0" prefWidth="730.0">
          <children>
-            <Button fx:id="enter" layoutX="628.0" layoutY="10.0" mnemonicParsing="false" onAction="#submit" prefHeight="38.0" prefWidth="88.0" text="Enter" />
-            <TextField fx:id="ipConnection" layoutX="14.0" layoutY="10.0" prefHeight="38.0" prefWidth="596.0" promptText="Input Ip">
+            <Button fx:id="enter" focusTraversable="false" layoutX="628.0" layoutY="10.0" mnemonicParsing="false" onAction="#submit" prefHeight="38.0" prefWidth="88.0" text="Enter" />
+            <TextField fx:id="ipConnection" focusTraversable="false" layoutX="14.0" layoutY="10.0" prefHeight="38.0" prefWidth="596.0" promptText="Input Ip">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
@@ -33,6 +33,6 @@
             </Text>
          </children>
       </Pane>
-      <Button fx:id="exit" layoutX="739.0" layoutY="12.0" mnemonicParsing="false" onAction="#exit" prefHeight="24.0" prefWidth="45.0" text="Exit" />
+      <Button fx:id="exit" focusTraversable="false" layoutX="739.0" layoutY="12.0" mnemonicParsing="false" onAction="#exit" prefHeight="24.0" prefWidth="45.0" text="Exit" />
    </children>
 </Pane>
