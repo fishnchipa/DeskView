@@ -19,7 +19,7 @@
          <children>
             <AnchorPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="header" HBox.hgrow="ALWAYS">
                <children>
-                  <TextField fx:id="IpInput" layoutX="381.0" layoutY="17.0" pickOnBounds="false" prefHeight="60.0" prefWidth="395.0" promptText="Enter Connection" styleClass="input-field" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="208.0" AnchorPane.topAnchor="16.0" />
+                  <TextField fx:id="IpInput" layoutX="381.0" layoutY="17.0" prefHeight="60.0" prefWidth="395.0" promptText="Enter Connection" styleClass="input-field" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="208.0" AnchorPane.topAnchor="16.0" />
                   <Button layoutX="843.0" layoutY="12.0" mnemonicParsing="false" onAction="#submit" prefHeight="60.0" prefWidth="130.0" styleClass="button-field" text="Enter" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="16.0" />
                   <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.topAnchor="16.0">
                      <image>
