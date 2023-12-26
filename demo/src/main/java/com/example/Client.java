@@ -1,5 +1,6 @@
 package com.example;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -21,8 +22,9 @@ import javafx.stage.Screen;
 public class Client {
     private InputStream input;
     private OutputStream output;
-
     private Socket socket;
+    private int resizedWidth = 1280;
+    private int resizedHeight = 720;
 
     public void connectToServer(String ip) { 
         try {
@@ -56,12 +58,17 @@ public class Client {
         try {
             Robot r = new Robot();
             // Rectangle2D screenBounds = new Rectangle2D(0, 0, 800, 600);
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
             while (true) {
                 WritableImage screen = r.getScreenCapture(null, screenBounds, false);
                 BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
     
+                BufferedImage resizedImage = new BufferedImage(resizedWidth, resizedHeight, BufferedImage.TYPE_INT_RGB);
+                Graphics2D graphics2d = resizedImage.createGraphics();
+                graphics2d.drawImage(image, 0, 0, resizedWidth, resizedHeight, null);
+                graphics2d.dispose();
+
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 ImageIO.write(image, "gif", byteArrayOutputStream);
     
