@@ -1,0 +1,120 @@
+
+@font-face {
+    font-family: Poppins-Bold;
+    src: url("./Poppins-Bold.otf");
+}
+
+@font-face {
+    font-family: Poppins-Regular;
+    src: url("./Poppins-Regular.otf");
+}
+
+.body {
+    -fx-background-color:#1c1c2e;
+}
+
+.header {
+    -fx-background-radius: 8px;
+    -fx-background-color: #30303d;
+}
+
+.side-bar {
+    -fx-background-radius: 8px;
+    -fx-background-color: #30303d;
+}
+
+.main-body {
+    -fx-background-radius: 8px;
+    -fx-background-color: #30303d;
+}
+
+.footer {
+    -fx-background-radius: 8px;
+    -fx-background-color: #c981af;
+}
+
+.input-field {
+    -fx-background-radius:32px;
+    -fx-border-color:#bcbbd1;
+    -fx-border-radius:32px;
+    -fx-background-color:#686779;
+    -fx-padding: 0 0 0 25px;
+    -fx-font-size:18px;
+    -fx-text-fill: white;
+    -fx-weight:bold;
+}
+
+.input-field:focused {
+    -fx-border-width:3px;
+}
+
+.button-field {
+    -fx-font-size:14px;
+    -fx-background-radius:32px;
+    -fx-border-color:#bcbbd1;
+    -fx-border-radius:32px;
+    -fx-background-color:#c981af;
+    -fx-font-weight:bold;
+    -fx-text-fill: #1c1c2e;
+}
+
+.button-field:hover {
+    -fx-background-color:#ffd2da;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-cursor:hand;
+}
+
+.logo-label {
+    -fx-font-family: 'Poppins-Bold';
+    -fx-text-fill:linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #bcbbd1 0.0%, #c981af 100.0%);
+    
+}
+
+.side-bar-input {
+
+}
+
+.side-bar-input-button {
+    -fx-alignment: center-left;
+    -fx-font-size:15px;
+    -fx-background-color: #30303d;
+    -fx-text-fill: white;
+    -fx-font-weight:bold;
+    -fx-padding: 0 0 0 80px;
+    -fx-cursor:hand;
+}
+
+.side-bar-input-button:hover {
+    -fx-background-color:#686779;
+    
+}
+
+.body-connection-id-label {
+    -fx-text-fill:#686779;
+    -fx-font-family: "Poppins-Bold";
+    -fx-weight:bold;
+    
+}
+
+.body-connection-id-var {
+    -fx-fill:#c981af;
+    -fx-font-family: "Poppins-Bold";
+    -fx-weight:bold;
+
+}
+
+.footer-server-signal-on {
+    -fx-background-color:#00bb1f;
+    -fx-border-radius: 999px;
+    -fx-border-color:white;
+    -fx-background-radius:999px;
+    
+}
+
+.footer-server-signal-off {
+    -fx-background-color:#bb1c00;
+    -fx-border-radius: 999px;
+    -fx-border-color:white;
+    -fx-background-radius:999px;
+}
