@@ -18,6 +18,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -28,41 +29,38 @@ public class UserController {
     
 
     @FXML
-    private TextField ipConnection;
+    private TextField IpInput;
 
     @FXML 
-    private Button enter;
-
-    @FXML 
-    private Pane permission;
+    private Text ConnectionId;
 
     @FXML
-    private Pane main;
+    private Pane ServerSignalOn;
 
-    @FXML 
-    private Text connectionId;
+    @FXML
+    private Pane ServerSignalOff;
 
     private Client client;
 
 
 
     public void initialize() {
-
         DatagramSocket datagramSocket;
         try {
             datagramSocket = new DatagramSocket();
             datagramSocket.connect(InetAddress.getByName("8.8.8.8"),12345);
-            connectionId.setText(datagramSocket.getLocalAddress().getHostAddress());
+            ConnectionId.setText(datagramSocket.getLocalAddress().getHostAddress());
         } catch (SocketException | UnknownHostException e) {
             e.printStackTrace();
         }
+
     }
 
     public void submit(ActionEvent event) {
         client = new Client();
 
         System.out.println("Attemping to Connect to Server");
-        client.connectToServer(ipConnection.getText());
+        client.connectToServer(IpInput.getText());
 
         // Waiting for Server accept
         System.out.println("Waiting for Server");
@@ -85,6 +83,24 @@ public class UserController {
 
     public void exit(ActionEvent event) {
         System.exit(0);
+    }
+
+    public void setServerStatus(boolean status) {
+        if (status) {
+            ServerSignalOff.setVisible(false);
+            ServerSignalOn.setVisible(true);
+        } else {
+            ServerSignalOff.setVisible(true);
+            ServerSignalOn.setVisible(false);
+        }
+    }
+
+    public void focusInput(Scene scene) {
+        scene.setOnMousePressed(event -> {
+            if (!IpInput.equals(event.getSource())) {
+                IpInput.getParent().requestFocus();
+            }
+        });
     }
 
 }
