@@ -70,7 +70,7 @@ public class Client {
                 graphics2d.dispose();
 
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ImageIO.write(image, "gif", byteArrayOutputStream);
+                ImageIO.write(resizedImage, "gif", byteArrayOutputStream);
     
                 byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
                 byte[] byteImage = byteArrayOutputStream.toByteArray();

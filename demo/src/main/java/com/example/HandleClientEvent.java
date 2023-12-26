@@ -71,7 +71,7 @@ public class HandleClientEvent implements Runnable {
                 }
                 System.out.println("Key pressed: " + key);
             } catch (IOException e) {
-                e.printStackTrace();
+
             }
         }
     }
