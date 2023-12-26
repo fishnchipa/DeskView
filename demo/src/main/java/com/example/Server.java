@@ -31,7 +31,7 @@ public class Server implements Runnable {
 
     public void run() {
         try {
-            socket = new ServerSocket(1234);
+            socket = new ServerSocket(8080);
             
             // Continously listens to connetion event after disconnection
             //while (true) {
