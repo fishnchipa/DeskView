@@ -42,7 +42,7 @@ public class Server implements Runnable {
 
     public void run() {
         try {
-            int port = getServerPort();
+            int port = Integer.parseInt(DataHandler.getData("port"));
             socket = new ServerSocket(port);
             
             // Continously listens to connetion event after disconnection
@@ -80,27 +80,6 @@ public class Server implements Runnable {
             UserController controller = (UserController) ScreenController.getController("app-start");
             controller.setServerStatus(false);
         }
-    }
-
-
-
-    private int getServerPort() {
-        int port = -1;
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        
-        try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document dom = builder.parse(getClass().getResourceAsStream("/data/server.xml"));
-
-            Element doc = dom.getDocumentElement();
-            NodeList nl = doc.getElementsByTagName("port");
-            if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
-                port = Integer.parseInt(nl.item(0).getFirstChild().getNodeValue());
-            }
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-        }
-        return port;
     }
 
 
@@ -144,11 +123,9 @@ public class Server implements Runnable {
 
 
 
-
     public static BufferedInputStream getInputStream() {
         return input;
     }
-
 
 
 
