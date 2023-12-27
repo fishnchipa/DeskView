@@ -8,20 +8,35 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.function.UnaryOperator;
+
+import javax.sound.sampled.Port;
+import javax.swing.Action;
 
 import com.example.Client;
-import com.example.HandleClientEvent;
+import com.example.ClientEventHandler;
+import com.example.DataHandler;
 import com.example.Server;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -34,13 +49,67 @@ public class UserController {
     @FXML 
     private Text ConnectionId;
 
+    @FXML 
+    private AnchorPane ConnectionInput;
+
+    @FXML 
+    private Label ConnectionLabel;
+
     @FXML
     private Pane ServerSignalOn;
 
     @FXML
     private Pane ServerSignalOff;
 
+    @FXML
+    private HBox RemoteAccess;
+
+    @FXML
+    private ScrollPane Documentation;
+
+    @FXML 
+    private VBox DocumentationBackground;
+
+    @FXML 
+    private Text DocumentationText;
+
+    @FXML 
+    private Text GUIText;
+
+    @FXML 
+    private Text ProtocolText;
+
+    @FXML 
+    private ScrollPane Settings;
+
+    @FXML 
+    private AnchorPane SettingsBackground;
+
+    @FXML 
+    private AnchorPane SettingsGeneral;
+
+    @FXML 
+    private AnchorPane SettingsOutput;
+
+    @FXML 
+    private AnchorPane SettingsConnection;
+
+    @FXML 
+    private ComboBox<String> ThemeBox;
+
+    @FXML 
+    private ComboBox<String> LanguageBox;
+    
+    @FXML 
+    private ComboBox<String> QualityBox;
+
+    @FXML
+    private TextField PortBox;
+
     private Client client;
+    private ObservableList<String> themes = null;
+    private ObservableList<String> languages = null;
+    private ObservableList<String> qualities = null;
 
 
 
@@ -53,8 +122,9 @@ public class UserController {
         } catch (SocketException | UnknownHostException e) {
             e.printStackTrace();
         }
-
     }
+
+
 
     public void submit(ActionEvent event) {
         client = new Client();
@@ -72,7 +142,7 @@ public class UserController {
             System.out.println("sending images");
             
             // Thread for sending events
-            HandleClientEvent clientHandler = new HandleClientEvent(client);
+            ClientEventHandler clientHandler = new ClientEventHandler(client);
             Thread clientHandlerThread = new Thread(clientHandler);
             clientHandlerThread.start();
 
@@ -81,9 +151,7 @@ public class UserController {
         } 
     }
 
-    public void exit(ActionEvent event) {
-        System.exit(0);
-    }
+
 
     public void setServerStatus(boolean status) {
         if (status) {
@@ -95,6 +163,9 @@ public class UserController {
         }
     }
 
+
+
+
     public void focusInput(Scene scene) {
         scene.setOnMousePressed(event -> {
             if (!IpInput.equals(event.getSource())) {
@@ -103,4 +174,98 @@ public class UserController {
         });
     }
 
+
+
+
+    public void remoteAccessPage(ActionEvent event) {
+        RemoteAccess.setVisible(true);
+        Documentation.setVisible(false);
+        ConnectionInput.setVisible(true);
+        Settings.setVisible(false);
+    }
+
+
+
+
+    public void documentationPage(ActionEvent event) {
+        RemoteAccess.setVisible(false);
+        Documentation.setVisible(true);
+        ConnectionInput.setVisible(false);
+        Settings.setVisible(false);
+
+        DocumentationBackground.prefHeightProperty().bind(Documentation.heightProperty());
+        DocumentationBackground.prefWidthProperty().bind(Documentation.widthProperty());
+
+        DocumentationText.wrappingWidthProperty().bind(Documentation.widthProperty().subtract(20));
+        GUIText.wrappingWidthProperty().bind(Documentation.widthProperty().subtract(20));
+        ProtocolText.wrappingWidthProperty().bind(Documentation.widthProperty().subtract(20));
+    }
+
+
+
+
+    public void settingPage(ActionEvent event) {
+        RemoteAccess.setVisible(false);
+        Documentation.setVisible(false);
+        ConnectionInput.setVisible(false);
+        Settings.setVisible(true);
+
+        SettingsBackground.prefHeightProperty().bind(Settings.heightProperty().subtract(20));
+        SettingsBackground.prefWidthProperty().bind(Settings.widthProperty().subtract(20));
+
+        UnaryOperator <Change> numberFilter = change -> {
+            String portText = change.getText();
+            String newText = change.getControlNewText();
+
+            if (portText.isEmpty())  {
+                return change;
+            }
+      
+            if ((portText.matches("\\d+")) && newText.length() < 6) {
+                return change;
+            }
+            return null;
+        };
+
+        TextFormatter<String> formatter = new TextFormatter<>(numberFilter);
+        PortBox.setTextFormatter(formatter);
+
+        if (themes == null) {
+            themes = FXCollections.observableArrayList("Dark", "Light");
+            ThemeBox.setItems(themes);
+            ThemeBox.setPromptText(DataHandler.getData("theme"));
+        }
+
+        if (languages == null) {
+            languages = FXCollections.observableArrayList("English");
+            LanguageBox.setItems(languages);
+            LanguageBox.setPromptText(DataHandler.getData("language"));
+        }
+
+        if (qualities == null) {
+            qualities = FXCollections.observableArrayList("High", "Medium", "Low");
+            QualityBox.setItems(qualities);
+            QualityBox.setPromptText(DataHandler.getData("quality"));
+        }
+
+        if (PortBox.getPromptText().isEmpty()) {
+            PortBox.setPromptText(DataHandler.getData("port"));
+        }
+    }
+
+
+
+    public void save(ActionEvent event) {
+        String theme = ThemeBox.getValue();
+        String language = LanguageBox.getValue();
+        String quality = QualityBox.getValue();
+        String port = PortBox.getText();
+
+        DataHandler.setData(theme, language, quality, port);
+        System.out.println("Data saved");
+    }
+
+    public void exitPage(ActionEvent event) {
+        System.exit(0);
+    }
 }
