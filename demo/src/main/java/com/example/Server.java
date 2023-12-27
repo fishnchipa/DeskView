@@ -12,6 +12,14 @@ import java.nio.ByteBuffer;
 
 
 import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.example.Controllers.ScreenController;
 import com.example.Controllers.UserController;
@@ -30,9 +38,12 @@ public class Server implements Runnable {
     private static BufferedInputStream input;
     private static BufferedOutputStream output;
 
+
+
     public void run() {
         try {
-            socket = new ServerSocket(8080);
+            int port = getServerPort();
+            socket = new ServerSocket(port);
             
             // Continously listens to connetion event after disconnection
             while (!socket.isClosed()) {
@@ -65,11 +76,34 @@ public class Server implements Runnable {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Server not responding");
+            System.out.println("Port is unavaliable");
             UserController controller = (UserController) ScreenController.getController("app-start");
             controller.setServerStatus(false);
         }
     }
+
+
+
+    private int getServerPort() {
+        int port = -1;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document dom = builder.parse(getClass().getResourceAsStream("/data/server.xml"));
+
+            Element doc = dom.getDocumentElement();
+            NodeList nl = doc.getElementsByTagName("port");
+            if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
+                port = Integer.parseInt(nl.item(0).getFirstChild().getNodeValue());
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return port;
+    }
+
+
 
     private BufferedImage getScreenFrom() {
         BufferedImage image = null;
@@ -94,6 +128,8 @@ public class Server implements Runnable {
         return image;
     }
 
+
+
     public static void sendEvent(int key) {
         byte[] keyArray =  ByteBuffer.allocate(4).putInt(key).array();
 
@@ -106,9 +142,15 @@ public class Server implements Runnable {
 
     }
 
+
+
+
     public static BufferedInputStream getInputStream() {
         return input;
     }
+
+
+
 
     public static BufferedOutputStream getOutputStream() {
         return output;
