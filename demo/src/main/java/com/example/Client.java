@@ -12,6 +12,14 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Rectangle2D;
@@ -23,8 +31,9 @@ public class Client {
     private InputStream input;
     private OutputStream output;
     private Socket socket;
-    private int resizedWidth = 1280;
-    private int resizedHeight = 720;
+    private int resizedHeight = 0;
+    private int resizedWidth = 0;
+
 
     public void connectToServer(String ip) { 
         try {
@@ -40,6 +49,8 @@ public class Client {
         } 
     }
 
+
+
     public boolean receivePermission() {
         try {
             if (input.read() == 1) {
@@ -54,10 +65,13 @@ public class Client {
         return false;
     }
 
+
+
     public void sendScreen() {
+        getImageQuality();
+
         try {
             Robot r = new Robot();
-            // Rectangle2D screenBounds = new Rectangle2D(0, 0, 800, 600);
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
             while (true) {
@@ -81,14 +95,46 @@ public class Client {
                     output.write(byteImage[i] + 127);
                     output.flush();
                 }
-                
             }
-
         } catch (IOException e) {
             System.out.println("Server Closed Connection");
             System.exit(0);
         }
     }
+
+
+
+
+    private void getImageQuality() {
+        String quality = null;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document dom = builder.parse(getClass().getResourceAsStream("/data/client.xml"));
+
+            Element doc = dom.getDocumentElement();
+            NodeList nl = doc.getElementsByTagName("quality");
+            if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
+                quality = nl.item(0).getFirstChild().getNodeValue();
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        
+        if (quality.equals("high")) {
+            resizedHeight = 1080;
+            resizedWidth = 1920;
+        } else if (quality.equals("medium")) {
+            resizedHeight = 1080;
+            resizedWidth = 1440;
+        } else if (quality.equals("low")) {
+            resizedHeight = 720;
+            resizedWidth = 1280;
+        }
+    }
+
+
 
     public int receiveEvent() throws IOException {
         byte[] keyArray = new byte[4];
@@ -96,6 +142,9 @@ public class Client {
         int key = ByteBuffer.wrap(keyArray).asIntBuffer().get();
         return key;
     }
+
+
+
 
     public boolean isConnected() {
         return socket.isConnected();
