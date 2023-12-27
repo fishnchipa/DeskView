@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,8 +20,12 @@
          <children>
             <AnchorPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="header" HBox.hgrow="ALWAYS">
                <children>
-                  <TextField fx:id="IpInput" layoutX="381.0" layoutY="17.0" prefHeight="60.0" prefWidth="395.0" promptText="Enter Connection" styleClass="input-field" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="208.0" AnchorPane.topAnchor="16.0" />
-                  <Button layoutX="843.0" layoutY="12.0" mnemonicParsing="false" onAction="#submit" prefHeight="60.0" prefWidth="130.0" styleClass="button-field" text="Enter" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="16.0" />
+                  <AnchorPane fx:id="ConnectionInput" layoutX="380.0" layoutY="13.0" prefHeight="44.0" prefWidth="559.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="13.0">
+                     <children>
+                        <TextField fx:id="IpInput" prefHeight="60.0" prefWidth="395.0" promptText="Enter Connection" styleClass="input-field" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="5.0" />
+                        <Button layoutX="429.0" mnemonicParsing="false" onAction="#submit" prefHeight="60.0" prefWidth="130.0" styleClass="button-field" text="Enter" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                     </children>
+                  </AnchorPane>
                   <ImageView fitHeight="55.0" fitWidth="55.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="16.0" AnchorPane.topAnchor="16.0">
                      <image>
                         <Image url="@icons/arrow.png" />
@@ -46,10 +51,10 @@
                      <children>
                         <AnchorPane focusTraversable="true" layoutX="15.0" layoutY="94.0" prefHeight="240.0" prefWidth="285.0" styleClass="side-bar-input" AnchorPane.bottomAnchor="93.0" AnchorPane.topAnchor="94.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Remote Access" />
-                              <Button layoutY="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Documentation" />
+                              <Button mnemonicParsing="false" onAction="#remoteAccessPage" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Remote Access" />
+                              <Button layoutY="60.0" mnemonicParsing="false" onAction="#documentationPage" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Documentation" />
                               <Button layoutY="120.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Settings" />
-                              <Button contentDisplay="TOP" layoutY="180.0" mnemonicParsing="false" onAction="#exit" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Exit" />
+                              <Button contentDisplay="TOP" layoutY="180.0" mnemonicParsing="false" onAction="#exitPage" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Exit" />
                               <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="34.0" layoutY="15.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons/key.png" />
@@ -83,12 +88,12 @@
                <children>
                   <AnchorPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="main-body" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" layoutY="15.0" prefHeight="55.0" prefWidth="662.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <HBox fx:id="RemoteAccess" alignment="CENTER" layoutY="15.0" prefHeight="55.0" prefWidth="662.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <VBox>
                                  <children>
                                     <Pane prefHeight="8.0" prefWidth="205.0" />
-                                    <Label alignment="CENTER" contentDisplay="TOP" prefHeight="44.0" prefWidth="205.0" styleClass="body-connection-id-label" text="Connection Id:">
+                                    <Label fx:id="ConnectionLabel" alignment="CENTER" contentDisplay="TOP" prefHeight="44.0" prefWidth="205.0" styleClass="body-connection-id-label" text="Connection Id:">
                                        <font>
                                           <Font name="Manjari Bold" size="25.0" />
                                        </font>
@@ -102,6 +107,44 @@
                               </Text>
                            </children>
                         </HBox>
+                        <ScrollPane fx:id="Documentation" hbarPolicy="NEVER" layoutX="26.0" layoutY="15.0" pannable="true" prefHeight="398.0" prefWidth="632.0" styleClass="main-body-documentation-scroll" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                           <content>
+                              <VBox fx:id="DocumentationBackground" prefHeight="390.0" prefWidth="631.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="27.0" prefWidth="270.0" text="Documentation" textFill="WHITE">
+                                       <font>
+                                          <Font size="35.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="DocumentationText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DeskView is a java remote desktop application that provides an efficient way for users to access and control a remote computer or server from a differentiation location. This application was built,tested, and deployed  using Java and apache maven, ensuring platform independence and ease of deployment. ">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <Label prefHeight="9.0" prefWidth="377.0" text="Graphical User Interface (GUI)" textFill="WHITE">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="GUIText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="The Graphical User Interface (GUI) was built using the Javafx api with the assistance of scenebuilder which offers users a visually intuitive and interactive platform. DeskView uses FXML, a XML-based user interface markup language which provides an alternative to using procedural code, and allows for abstracting program design from program logic. The visual design is fully responsive and was implemented using external css files which enhanced responsivity and visual appeal of the application.">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <Label text="Connection Protocol" textFill="WHITE">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <Text fx:id="ProtocolText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DeskView utilises is based on the Remote Desktop protocol (RDP) which primarily uses the transmission control protocol (TCP) to send all the necessary data across the internet. Note that DeskView May require port forwarding to ensure that the connection between Server and user is connected. ">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
                      </children></AnchorPane>
                </children>
                <padding>
@@ -134,7 +177,8 @@
                         </Label>
                      </children>
                   </Pane>
-               </children></AnchorPane>
+               </children>
+            </AnchorPane>
          </children>
          <padding>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
