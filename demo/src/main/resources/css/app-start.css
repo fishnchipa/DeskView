@@ -28,13 +28,20 @@
     -fx-background-color: #30303d;
 }
 
-.main-body-documentation-scroll {
+.main-body-scroll {
     -fx-background-color:transparent;
 }
 
-.main-body-documentation-scroll .viewport {
+.main-body-scroll .viewport {
     -fx-background-color:transparent;
 }
+
+.main-body-setting {
+    -fx-background-radius: 8px;
+    -fx-background-color: #686779;;
+}
+
+
 
 .footer {
     -fx-background-radius: 8px;
