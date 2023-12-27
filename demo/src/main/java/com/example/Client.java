@@ -68,8 +68,19 @@ public class Client {
 
 
     public void sendScreen() {
-        getImageQuality();
+        String quality = DataHandler.getData("quality");
 
+        if (quality.equals("high")) {
+            resizedHeight = 1080;
+            resizedWidth = 1920;
+        } else if (quality.equals("medium")) {
+            resizedHeight = 1080;
+            resizedWidth = 1440;
+        } else if (quality.equals("low")) {
+            resizedHeight = 720;
+            resizedWidth = 1280;
+        }
+        
         try {
             Robot r = new Robot();
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
@@ -99,38 +110,6 @@ public class Client {
         } catch (IOException e) {
             System.out.println("Server Closed Connection");
             System.exit(0);
-        }
-    }
-
-
-
-
-    private void getImageQuality() {
-        String quality = null;
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        
-        try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document dom = builder.parse(getClass().getResourceAsStream("/data/client.xml"));
-
-            Element doc = dom.getDocumentElement();
-            NodeList nl = doc.getElementsByTagName("quality");
-            if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
-                quality = nl.item(0).getFirstChild().getNodeValue();
-            }
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-        }
-        
-        if (quality.equals("high")) {
-            resizedHeight = 1080;
-            resizedWidth = 1920;
-        } else if (quality.equals("medium")) {
-            resizedHeight = 1080;
-            resizedWidth = 1440;
-        } else if (quality.equals("low")) {
-            resizedHeight = 720;
-            resizedWidth = 1280;
         }
     }
 
