@@ -1,32 +1,24 @@
 package com.example.Controllers;
 
-import java.io.BufferedWriter;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.function.UnaryOperator;
 
-import javax.sound.sampled.Port;
-import javax.swing.Action;
 
 import com.example.Client;
 import com.example.ClientEventHandler;
 import com.example.DataHandler;
 import com.example.Server;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -38,7 +30,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 public class UserController {
     
@@ -80,7 +71,7 @@ public class UserController {
     private Text ProtocolText;
 
     @FXML 
-    private ScrollPane Settings;
+    private AnchorPane Settings;
 
     @FXML 
     private AnchorPane SettingsBackground;
@@ -106,11 +97,27 @@ public class UserController {
     @FXML
     private TextField PortBox;
 
+    @FXML 
+    private HBox Header;
+
+    @FXML 
+    private HBox Body;
+
+    @FXML 
+    private HBox Footer;
+
+    @FXML 
+    private HBox Permission;
+
+    @FXML 
+    private Label ResetSave;
+
     private Client client;
+    private Server server;
     private ObservableList<String> themes = null;
     private ObservableList<String> languages = null;
     private ObservableList<String> qualities = null;
-
+    
 
 
     public void initialize() {
@@ -149,6 +156,55 @@ public class UserController {
             // Sending screen capture
             client.sendScreen();
         } 
+    }
+
+
+
+
+    public void showPermission(Server server) {
+        this.server = server;
+        disableAll();
+        Permission.setVisible(true);
+    }
+
+
+
+
+    public void acceptConnection(ActionEvent event) {
+        System.out.println("Accepted");
+        System.out.println("Loading Screen");
+        ScreenController.activate("view");
+        BufferedOutputStream writer = Server.getOutputStream();
+        
+        // Sending confirmation to Client
+        try {
+            writer.write(1);
+            writer.flush();
+            System.out.println("Confirmation Sent");
+
+        } catch (IOException e) {
+            System.out.println("Acception error");
+            e.printStackTrace();
+        }
+        synchronized(server) {
+            server.notify();
+        }
+    }
+
+
+
+
+    public void declineConnection(ActionEvent event) {
+        BufferedOutputStream writer = Server.getOutputStream();
+        Permission.setVisible(false);
+        enableAll();
+        try {
+            writer.write(0);
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -263,6 +319,22 @@ public class UserController {
 
         DataHandler.setData(theme, language, quality, port);
         System.out.println("Data saved");
+        ResetSave.setVisible(true);
+    }
+
+
+
+    private void disableAll() {
+        Header.setDisable(true);
+        Body.setDisable(true);
+        Footer.setDisable(true);
+
+    }
+
+    private void enableAll() {
+        Header.setDisable(false);
+        Body.setDisable(false);
+        Footer.setDisable(false);
     }
 
     public void exitPage(ActionEvent event) {
