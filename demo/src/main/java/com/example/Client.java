@@ -37,7 +37,7 @@ public class Client {
 
     public void connectToServer(String ip) { 
         try {
-            socket = new Socket(ip, 1234);
+            socket = new Socket(ip, 8080);
             input = socket.getInputStream();
             output = socket.getOutputStream();
 
