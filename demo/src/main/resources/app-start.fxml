@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1168.0" styleClass="body" stylesheets="@css/app-start.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.UserController">
    <children>
-      <HBox prefHeight="100.0" prefWidth="1920.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox fx:id="Header" prefHeight="100.0" prefWidth="1920.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="header" HBox.hgrow="ALWAYS">
                <children>
@@ -45,7 +45,7 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </HBox>
-      <HBox layoutY="103.0" prefHeight="377.0" prefWidth="1920.0" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="104.0">
+      <HBox fx:id="Body" layoutY="103.0" prefHeight="377.0" prefWidth="1920.0" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="104.0">
          <children>
             <VBox prefHeight="430.0" prefWidth="330.0">
                <children>
@@ -218,7 +218,7 @@
             </VBox>
          </children>
       </HBox>
-      <HBox layoutY="730.0" prefHeight="70.0" prefWidth="1920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox fx:id="Footer" layoutY="730.0" prefHeight="70.0" prefWidth="1920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <AnchorPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="footer" HBox.hgrow="ALWAYS">
                <children>
@@ -249,6 +249,20 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </HBox>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="200.0" />
+      <HBox fx:id="Permission" alignment="CENTER" layoutX="200.0" layoutY="200.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="400.0" prefWidth="768.0" styleClass="permission-connection">
+               <children>
+                  <Label layoutX="180.0" layoutY="30.0" text="Requesting Connection" textFill="WHITE" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="declineConnection" layoutX="105.0" layoutY="264.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button-field" text="Decline" AnchorPane.leftAnchor="105.0" />
+                  <Button fx:id="acceptConnection" layoutX="513.0" layoutY="264.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button-field" text="Accept" AnchorPane.rightAnchor="105.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
