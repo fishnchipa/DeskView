@@ -249,7 +249,7 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </HBox>
-      <HBox fx:id="Permission" alignment="CENTER" layoutX="200.0" layoutY="200.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox fx:id="Permission" alignment="CENTER" layoutX="200.0" layoutY="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <AnchorPane prefHeight="400.0" prefWidth="768.0" styleClass="permission-connection">
                <children>
@@ -258,8 +258,8 @@
                         <Font size="35.0" />
                      </font>
                   </Label>
-                  <Button fx:id="declineConnection" layoutX="105.0" layoutY="264.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button-field" text="Decline" AnchorPane.leftAnchor="105.0" />
-                  <Button fx:id="acceptConnection" layoutX="513.0" layoutY="264.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button-field" text="Accept" AnchorPane.rightAnchor="105.0" />
+                  <Button layoutX="105.0" layoutY="264.0" mnemonicParsing="false" onAction="#declineConnection" prefHeight="60.0" prefWidth="150.0" styleClass="button-field" text="Decline" AnchorPane.leftAnchor="105.0" />
+                  <Button layoutX="513.0" layoutY="264.0" mnemonicParsing="false" onAction="#acceptConnection" prefHeight="60.0" prefWidth="150.0" styleClass="button-field" text="Accept" AnchorPane.rightAnchor="105.0" />
                </children>
             </AnchorPane>
          </children>
