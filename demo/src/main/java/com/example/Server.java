@@ -27,6 +27,7 @@ import com.example.Controllers.ViewController;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 
 
 
@@ -55,7 +56,8 @@ public class Server implements Runnable {
 
                     // Permission for connection
                     System.out.println("Waiting Acception");
-                    ScreenController.activate("permission", this);
+                    UserController userController = ScreenController.getController("app-start");
+                    userController.showPermission(this);
 
                     synchronized(this) {
                         this.wait();
