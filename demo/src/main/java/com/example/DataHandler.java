@@ -24,6 +24,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class DataHandler {
+
+
     public static String getData(String value) {
         String result = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -40,16 +42,30 @@ public class DataHandler {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
-        
+
         return result;
     }
 
 
 
     public static void setData(String theme, String language, String quality, String port) {
+        if (theme == null) {
+            theme = getData("theme");
+        }
+        if  (language == null) {
+            language = getData("language");
+        }
+
+        if (quality == null) {
+            quality =  getData("quality");
+        }
+
+        if (port.isEmpty()) {
+            port = getData("port");
+        }
+
         Document dom;
         Element e = null;
-
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
