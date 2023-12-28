@@ -133,3 +133,8 @@
     -fx-border-color:white;
     -fx-background-radius:999px;
 }
+
+.permission-connection {
+    -fx-background-radius: 8px;
+    -fx-background-color: #686779;;
+}

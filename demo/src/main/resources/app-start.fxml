@@ -16,9 +16,9 @@
 <?import javafx.scene.text.Text?>
 
 
-<VBox alignment="CENTER" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1040.0" styleClass="body" stylesheets="@css/app-start.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.UserController">
+<AnchorPane prefHeight="800.0" prefWidth="1168.0" styleClass="body" stylesheets="@css/app-start.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.UserController">
    <children>
-      <HBox prefHeight="100.0" prefWidth="1920.0">
+      <HBox prefHeight="100.0" prefWidth="1920.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="header" HBox.hgrow="ALWAYS">
                <children>
@@ -45,13 +45,13 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </HBox>
-      <HBox prefHeight="377.0" prefWidth="1920.0" VBox.vgrow="ALWAYS">
+      <HBox layoutY="103.0" prefHeight="377.0" prefWidth="1920.0" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="104.0">
          <children>
             <VBox prefHeight="430.0" prefWidth="330.0">
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="side-bar" VBox.vgrow="ALWAYS">
                      <children>
-                        <AnchorPane focusTraversable="true" layoutX="15.0" layoutY="94.0" prefHeight="240.0" prefWidth="285.0" styleClass="side-bar-input" AnchorPane.bottomAnchor="93.0" AnchorPane.topAnchor="94.0">
+                        <AnchorPane focusTraversable="true" layoutX="15.0" layoutY="94.0" prefHeight="240.0" prefWidth="285.0" styleClass="side-bar-input" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#remoteAccessPage" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Remote Access" />
                               <Button layoutY="60.0" mnemonicParsing="false" onAction="#documentationPage" prefHeight="60.0" prefWidth="285.0" styleClass="side-bar-input-button" text="Documentation" />
@@ -218,7 +218,7 @@
             </VBox>
          </children>
       </HBox>
-      <HBox prefHeight="70.0" prefWidth="1920.0">
+      <HBox layoutY="730.0" prefHeight="70.0" prefWidth="1920.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <AnchorPane focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="footer" HBox.hgrow="ALWAYS">
                <children>
@@ -249,5 +249,6 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </HBox>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="200.0" />
    </children>
-</VBox>
+</AnchorPane>
