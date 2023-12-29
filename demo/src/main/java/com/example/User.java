@@ -59,7 +59,7 @@ public class User extends Application{
             controller.focusInput(scene);
 
             server = new Server();
-            Thread serverThread = new Thread(server);
+            Thread serverThread = new Thread(server, "Server Thread");
             serverThread.start();
 
             primaryStage.setScene(scene);
