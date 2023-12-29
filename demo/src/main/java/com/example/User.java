@@ -63,7 +63,7 @@ public class User extends Application{
             primaryStage.setMaximized(true);
             primaryStage.show();
 
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
