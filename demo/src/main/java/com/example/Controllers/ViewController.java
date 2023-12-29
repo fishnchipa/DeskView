@@ -39,6 +39,10 @@ public class ViewController {
     private static Boolean isfullScreen = false;
     private static Dimension clientScreenSize;
 
+    public ViewController(Dimension screenSize) {
+        clientScreenSize = screenSize;
+    }
+
     public void initialize() {
         ScreenView.fitWidthProperty().bind(Body.widthProperty());
         ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
