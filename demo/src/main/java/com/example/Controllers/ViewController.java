@@ -4,23 +4,42 @@ package com.example.Controllers;
 import com.example.MouseKey;
 import com.example.Server;
 
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 
 public class ViewController {
-    
+
     @FXML 
-    private ImageView screen;
+    private AnchorPane Header;
+
+    @FXML 
+    private AnchorPane HeaderTransition;
+
+    @FXML 
+    private AnchorPane Body;
+
+    @FXML 
+    private ImageView ScreenView;
+
+    private static Boolean isfullScreen = false;
 
     public void initialize() {
+        ScreenView.fitWidthProperty().bind(Body.widthProperty());
+        ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
+
         Scene scene = ScreenController.getScene();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
@@ -89,10 +108,68 @@ public class ViewController {
         });
     }
 
-
     public void setScreen(Image image) {
-        screen.setImage(image);
+        ScreenView.setImage(image);
     }
+
+
+    public void fullScreen(ActionEvent event) {
+        Stage stage = (Stage) Body.getScene().getWindow();
+        if (isfullScreen) {
+
+            stage.setFullScreen(false);
+            isfullScreen = false;
+            
+            ScreenView.fitWidthProperty().bind(Body.widthProperty());
+            ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
+            ScreenView.setLayoutY(50);
+
+            HeaderTransition.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent event) {}
+            });
+
+            HeaderTransition.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent event) {}
+            });
+
+        } else {
+
+            stage.setFullScreen(true);
+            isfullScreen = true;
+
+            AnchorPane.clearConstraints(ScreenView);
+
+            Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+
+
+            ScreenView.fitWidthProperty().unbind();
+            ScreenView.fitHeightProperty().unbind();
+
+            ScreenView.setLayoutY(0);
+            ScreenView.setFitWidth(screenBounds.getWidth());
+            ScreenView.setFitHeight(screenBounds.getHeight());
+            Header.setLayoutY(-50);
+
+            HeaderTransition.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+                    Header.setLayoutY(50);
+                }
+                
+            });
+
+            HeaderTransition.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+                @Override
+                public void handle(MouseEvent event) {
+                    Header.setLayoutY(-50);
+                }
+            });
+        }
+    }
+
+
 
     public void exit(ActionEvent event) {
         System.exit(0);
