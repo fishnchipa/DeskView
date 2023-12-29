@@ -1,13 +1,21 @@
 package com.example.Controllers;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.function.UnaryOperator;
 
+import javax.imageio.ImageIO;
+import javax.swing.text.View;
 
 import com.example.Client;
 import com.example.ClientEventHandler;
@@ -16,6 +24,8 @@ import com.example.Server;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -25,6 +35,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -134,28 +145,40 @@ public class UserController {
 
 
     public void submit(ActionEvent event) {
-        client = new Client();
+        Runnable run = new Runnable() {
 
-        System.out.println("Attemping to Connect to Server");
-        client.connectToServer(IpInput.getText());
+            @Override
+            public void run() {
+                client = new Client();
 
-        // Waiting for Server accept
-        System.out.println("Waiting for Server");
+                System.out.println("Attemping to Connect to Server");
+                client.connectToServer(IpInput.getText());
 
-        if(client.receivePermission()) {
-            System.out.println("Successfully Connected to Server");
+                // Waiting for Server accept
+                System.out.println("Waiting for Server");
 
-            ScreenController.activate("capture");
-            System.out.println("sending images");
+                if(client.receivePermission()) {
+                    System.out.println("Successfully Connected to Server");
+
+                    ScreenController.activate("capture");
+                    System.out.println("sending images");
+                    
+                    // Thread for sending events
+                    ClientEventHandler clientHandler = new ClientEventHandler(client);
+                    Thread clientHandlerThread = new Thread(clientHandler);
+                    clientHandlerThread.start();
+
+                    // Sending screen capture
+                    client.createScreenCaptureThread();
+                } 
+            }
+        };
+
+        Thread newThread = new Thread(run);
+        newThread.start();
             
-            // Thread for sending events
-            ClientEventHandler clientHandler = new ClientEventHandler(client);
-            Thread clientHandlerThread = new Thread(clientHandler);
-            clientHandlerThread.start();
+    
 
-            // Sending screen capture
-            client.sendScreen();
-        } 
     }
 
 

@@ -1,6 +1,11 @@
 package com.example;
 
+import java.awt.AWTException;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -21,18 +26,23 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.example.Controllers.ScreenController;
+import com.example.Controllers.UserController;
+import com.example.Controllers.ViewController;
+
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.robot.Robot;
 import javafx.stage.Screen;
 
 public class Client {
     private InputStream input;
     private OutputStream output;
     private Socket socket;
-    private int resizedHeight = 0;
-    private int resizedWidth = 0;
+    private int resizedHeight = 1080;
+    private int resizedWidth = 1920;
 
 
     public void connectToServer(String ip) { 
@@ -67,7 +77,7 @@ public class Client {
 
 
 
-    public void sendScreen() {
+    public void createScreenCaptureThread() {
         String quality = DataHandler.getData("quality");
 
         if (quality.equals("high")) {
@@ -81,19 +91,20 @@ public class Client {
             resizedWidth = 1280;
         }
         
-        try {
-            Robot r = new Robot();
-            Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        try { 
+    
+            Robot robot = new Robot();
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            Rectangle screenBounds = new Rectangle(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
 
-            while (true) {
-                WritableImage screen = r.getScreenCapture(null, screenBounds, false);
-                BufferedImage image = SwingFXUtils.fromFXImage(screen, null);
+            while (socket.isConnected()) {
+                BufferedImage image = robot.createScreenCapture(screenBounds);
     
                 BufferedImage resizedImage = new BufferedImage(resizedWidth, resizedHeight, BufferedImage.TYPE_INT_RGB);
                 Graphics2D graphics2d = resizedImage.createGraphics();
                 graphics2d.drawImage(image, 0, 0, resizedWidth, resizedHeight, null);
                 graphics2d.dispose();
-
+    
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 ImageIO.write(resizedImage, "gif", byteArrayOutputStream);
     
@@ -106,11 +117,14 @@ public class Client {
                     output.write(byteImage[i] + 127);
                     output.flush();
                 }
+                System.out.println("Image sent");
             }
-        } catch (IOException e) {
-            System.out.println("Server Closed Connection");
-            System.exit(0);
+ 
+        } catch (AWTException | IOException e) {
+            e.printStackTrace();
         }
+
+
     }
 
 
