@@ -2,6 +2,7 @@ package com.example.Controllers;
 
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import com.example.MouseKey;
 import com.example.Server;
@@ -37,10 +38,14 @@ public class ViewController {
     private ImageView ScreenView;
 
     private static Boolean isfullScreen = false;
-    private static Dimension clientScreenSize;
+    private int xOffsetScale;
+    private int yOffsetScale;
 
-    public ViewController(Dimension screenSize) {
-        clientScreenSize = screenSize;
+    public ViewController(Dimension clientScreenSize) {
+        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        yOffsetScale = (int) clientScreenSize.getHeight() / screenHeight;
+        xOffsetScale = (int) clientScreenSize.getWidth() / screenWidth;
     }
 
     public void initialize() {
@@ -48,7 +53,7 @@ public class ViewController {
         ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
 
         Scene scene = ScreenController.getScene();
-        System.out.println(clientScreenSize);
+
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
             @Override
@@ -63,8 +68,8 @@ public class ViewController {
             @Override
             public void handle(MouseEvent event) {
 
-                int x = (int) event.getScreenX() + MouseKey.ScreenOffset;
-                int y = (int) event.getScreenY() + MouseKey.ScreenOffset;
+                int x = (int) (event.getScreenX() * xOffsetScale) + MouseKey.ScreenOffset;
+                int y = (int) (event.getScreenY() * yOffsetScale) + MouseKey.ScreenOffset;
                 Server.sendEvent(x);
                 Server.sendEvent(y);
                 System.out.println("Mouse moved to x: " + x + " y: " + y);
@@ -86,8 +91,8 @@ public class ViewController {
             public void handle(MouseEvent event) {
 
                 try {
-                    int x = (int) event.getScreenX() + MouseKey.ScreenOffset;
-                    int y = (int) event.getScreenY() + MouseKey.ScreenOffset;
+                    int x = (int) (event.getScreenX() * xOffsetScale) + MouseKey.ScreenOffset;
+                    int y = (int) (event.getScreenY() * yOffsetScale) + MouseKey.ScreenOffset;
                     Thread.sleep(200);
                     Server.sendEvent(x);
                     Server.sendEvent(y);
@@ -122,9 +127,6 @@ public class ViewController {
 
 
 
-    public void setClientScreenDetails(Dimension dimension) {
-        clientScreenSize = dimension;
-    }
 
     public void fullScreen(ActionEvent event) {
         Stage stage = (Stage) Body.getScene().getWindow();
