@@ -63,7 +63,7 @@ public class Server implements Runnable {
                         this.wait();
                     }
                 
-                    ViewController view = ScreenController.getController("view");
+                    ViewController view = ScreenController.getController("app-view");
 
                     while (true) {
                         BufferedImage screen = getScreenFrom();
