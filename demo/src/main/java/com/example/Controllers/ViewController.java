@@ -60,8 +60,8 @@ public class ViewController {
         ScreenView.fitWidthProperty().bind(Body.widthProperty());
         ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
 
-        yOffsetScaleNotFullScreen = clientScreenSize.getHeight() / ScreenView.getFitHeight();
-        xOffsetScaleNotFullScreen = clientScreenSize.getWidth() / ScreenView.getFitWidth();
+        yOffsetScaleNotFullScreen = clientScreenSize.getHeight() / Body.getHeight() - 50;
+        xOffsetScaleNotFullScreen = clientScreenSize.getWidth() / Body.getWidth();
 
         yOffsetScaleFullScreen = clientScreenSize.getHeight() / screenHeightFullSize;
         xOffsetScaleFullScreen = clientScreenSize.getWidth() / screenWidthFullSize;
