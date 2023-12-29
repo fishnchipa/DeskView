@@ -60,8 +60,8 @@ public class ViewController {
         ScreenView.fitWidthProperty().bind(Body.widthProperty());
         ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
 
-        yOffsetScaleFullScreen = screenHeightFullSize / clientScreenSize.getHeight() ;
-        xOffsetScaleFullScreen = screenWidthFullSize / clientScreenSize.getWidth();
+        yOffsetScaleFullScreen = clientScreenSize.getHeight() - screenHeightFullSize; 
+        xOffsetScaleFullScreen = clientScreenSize.getWidth() - screenWidthFullSize;  
 
 
         Scene scene = ScreenController.getScene();
@@ -82,11 +82,11 @@ public class ViewController {
                     xOffsetScale = xOffsetScaleFullScreen;
                     yOffsetScale = yOffsetScaleFullScreen;
                 } else {
-                    xOffsetScale = ScreenView.getFitWidth() / clientScreenSize.getWidth();
-                    yOffsetScale = ScreenView.getFitHeight() / clientScreenSize.getHeight(); 
+                    xOffsetScale = clientScreenSize.getWidth() - ScreenView.getFitWidth(); 
+                    yOffsetScale = clientScreenSize.getHeight() - ScreenView.getFitHeight();
                 }
-                int x = (int) (event.getScreenX() * xOffsetScale) + MouseKey.ScreenOffset;
-                int y = (int) (event.getScreenY() * yOffsetScale) + MouseKey.ScreenOffset;
+                int x = (int) (event.getScreenX() + xOffsetScale + MouseKey.ScreenOffset);
+                int y = (int) (event.getScreenY() + yOffsetScale + MouseKey.ScreenOffset);
                 Server.sendEvent(x);
                 Server.sendEvent(y);
                 System.out.println("Mouse moved to x: " + (event.getScreenX()-MouseKey.ScreenOffset)+ " y: " + (event.getScreenY()-MouseKey.ScreenOffset));
@@ -110,12 +110,12 @@ public class ViewController {
                     xOffsetScale = xOffsetScaleFullScreen;
                     yOffsetScale = yOffsetScaleFullScreen;
                 } else {
-                    xOffsetScale = ScreenView.getFitWidth() / clientScreenSize.getWidth();
-                    yOffsetScale = ScreenView.getFitHeight() / clientScreenSize.getHeight(); 
+                    xOffsetScale = clientScreenSize.getWidth() - ScreenView.getFitWidth(); 
+                    yOffsetScale = clientScreenSize.getHeight() - ScreenView.getFitHeight();
                 }
                 try {
-                    int x = (int) (event.getScreenX() * xOffsetScale) + MouseKey.ScreenOffset;
-                    int y = (int) (event.getScreenY() * yOffsetScale) + MouseKey.ScreenOffset;
+                    int x = (int) (event.getScreenX() + xOffsetScale + MouseKey.ScreenOffset);
+                    int y = (int) (event.getScreenY() + yOffsetScale + MouseKey.ScreenOffset);
                     Thread.sleep(200);
                     Server.sendEvent(x);
                     Server.sendEvent(y);
