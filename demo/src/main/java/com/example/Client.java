@@ -77,7 +77,7 @@ public class Client {
 
 
 
-    public void createScreenCaptureThread() {
+    public void screenCapture() {
         String quality = DataHandler.getData("quality");
 
         if (quality.equals("high")) {
