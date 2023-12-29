@@ -8,11 +8,13 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
@@ -61,6 +63,19 @@ public class Client {
 
 
 
+    public void sendScreenDetails() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output));
+        try {
+            writer.write(screenSize.toString());
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     public boolean receivePermission() {
         try {
             if (input.read() == 1) {
@@ -74,6 +89,7 @@ public class Client {
         System.out.println("Unsuccessful Connection");
         return false;
     }
+
 
 
 

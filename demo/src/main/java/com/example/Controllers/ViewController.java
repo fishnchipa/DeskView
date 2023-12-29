@@ -1,6 +1,8 @@
 package com.example.Controllers;
 
 
+import java.awt.Dimension;
+
 import com.example.MouseKey;
 import com.example.Server;
 
@@ -35,12 +37,14 @@ public class ViewController {
     private ImageView ScreenView;
 
     private static Boolean isfullScreen = false;
+    private static Dimension clientScreenSize;
 
     public void initialize() {
         ScreenView.fitWidthProperty().bind(Body.widthProperty());
         ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
 
         Scene scene = ScreenController.getScene();
+        System.out.println(clientScreenSize);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
             @Override
@@ -112,6 +116,11 @@ public class ViewController {
         ScreenView.setImage(image);
     }
 
+
+
+    public void setClientScreenDetails(Dimension dimension) {
+        clientScreenSize = dimension;
+    }
 
     public void fullScreen(ActionEvent event) {
         Stage stage = (Stage) Body.getScene().getWindow();

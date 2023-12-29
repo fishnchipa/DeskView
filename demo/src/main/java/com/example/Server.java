@@ -1,11 +1,15 @@
 package com.example;
 
+import java.awt.Dimension;
+import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -59,11 +63,14 @@ public class Server implements Runnable {
                     UserController userController = ScreenController.getController("app-start");
                     userController.showPermission(this);
 
+                    // Recieve Screen Size
+                    ViewController view = ScreenController.getController("app-view");
+                    Dimension clientScreen = getScreenDetails();
+                    view.setClientScreenDetails(clientScreen);
+
                     synchronized(this) {
                         this.wait();
                     }
-                
-                    ViewController view = ScreenController.getController("app-view");
 
                     while (true) {
                         BufferedImage screen = getScreenFrom();
@@ -84,6 +91,25 @@ public class Server implements Runnable {
         }
     }
 
+
+    private Dimension getScreenDetails() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+        Dimension dimension = null;
+        try {
+            String screenString = reader.readLine();
+            String newString = screenString.substring(19, screenString.length() - 1);
+            String[] sizeAr = newString.split(",");
+    
+            int height = Integer.parseInt(sizeAr[0].substring(6));
+            int width = Integer.parseInt(sizeAr[1].substring(7));
+
+            dimension = new Dimension(width, height);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dimension;
+    }
 
 
     private BufferedImage getScreenFrom() {

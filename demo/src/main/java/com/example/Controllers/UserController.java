@@ -1,12 +1,17 @@
 package com.example.Controllers;
 
 import java.awt.AWTException;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
@@ -128,7 +133,6 @@ public class UserController {
     private ObservableList<String> themes = null;
     private ObservableList<String> languages = null;
     private ObservableList<String> qualities = null;
-    
 
 
     public void initialize() {
@@ -156,6 +160,9 @@ public class UserController {
 
                 // Waiting for Server accept
                 System.out.println("Waiting for Server");
+
+                // Send Screen Size 
+                client.sendScreenDetails();
 
                 if(client.receivePermission()) {
                     System.out.println("Successfully Connected to Server");
