@@ -102,8 +102,8 @@ public class Server implements Runnable {
             String newString = screenString.substring(19, screenString.length() - 1);
             String[] sizeAr = newString.split(",");
     
-            int height = Integer.parseInt(sizeAr[0].substring(6));
-            int width = Integer.parseInt(sizeAr[1].substring(7));
+            int width = Integer.parseInt(sizeAr[0].substring(6));
+            int height = Integer.parseInt(sizeAr[1].substring(7));
 
             dimension = new Dimension(width, height);
 
