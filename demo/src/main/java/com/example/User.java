@@ -45,14 +45,11 @@ public class User extends Application{
             ScreenController screenController = new ScreenController(scene);
             screenController.addScreen("app-start", loader1);
 
-            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/view.fxml"));
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/app-view.fxml"));
             screenController.addScreen("view", loader2);
 
-            FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/permission.fxml"));
-            screenController.addScreen("permission", loader3);
-
-            FXMLLoader loader4 = new FXMLLoader(getClass().getResource("/capture.fxml"));
-            screenController.addScreen("capture", loader4);
+            FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/capture.fxml"));
+            screenController.addScreen("capture", loader3);
 
             // Connection Input unfocused when pressed out side of area
             UserController controller = ScreenController.getController("app-start");
