@@ -38,22 +38,36 @@ public class ViewController {
     private ImageView ScreenView;
 
     private static Boolean isfullScreen = false;
-    private int xOffsetScale;
-    private int yOffsetScale;
+    private double yOffsetScale;
+    private double xOffsetScale;
+    private double yOffsetScaleNotFullScreen;
+    private double xOffsetScaleNotFullScreen;
+    private double yOffsetScaleFullScreen;
+    private double xOffsetScaleFullScreen;
+    private double screenHeightFullSize;
+    private double screenWidthFullSize;
+    private Dimension clientScreenSize;
+    
+
 
     public ViewController(Dimension clientScreenSize) {
-        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        yOffsetScale = (int) clientScreenSize.getHeight() / screenHeight;
-        xOffsetScale = (int) clientScreenSize.getWidth() / screenWidth;
+        this.clientScreenSize = clientScreenSize;
+        screenHeightFullSize = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        screenWidthFullSize = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     }
 
     public void initialize() {
         ScreenView.fitWidthProperty().bind(Body.widthProperty());
         ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
 
-        Scene scene = ScreenController.getScene();
+        yOffsetScaleNotFullScreen = clientScreenSize.getHeight() / ScreenView.getFitHeight();
+        xOffsetScaleNotFullScreen = clientScreenSize.getWidth() / ScreenView.getFitWidth();
 
+        yOffsetScaleFullScreen = clientScreenSize.getHeight() / screenHeightFullSize;
+        xOffsetScaleFullScreen = clientScreenSize.getWidth() / screenWidthFullSize;
+
+
+        Scene scene = ScreenController.getScene();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
         
             @Override
@@ -67,12 +81,18 @@ public class ViewController {
 
             @Override
             public void handle(MouseEvent event) {
-
+                if (isfullScreen) {
+                    xOffsetScale = xOffsetScaleFullScreen;
+                    yOffsetScale = yOffsetScaleFullScreen;
+                } else {
+                    xOffsetScale = xOffsetScaleNotFullScreen;
+                    yOffsetScale = yOffsetScaleNotFullScreen;
+                }
                 int x = (int) (event.getScreenX() * xOffsetScale) + MouseKey.ScreenOffset;
                 int y = (int) (event.getScreenY() * yOffsetScale) + MouseKey.ScreenOffset;
                 Server.sendEvent(x);
                 Server.sendEvent(y);
-                System.out.println("Mouse moved to x: " + x + " y: " + y);
+                System.out.println("Mouse moved to x: " + (x-MouseKey.ScreenOffset)+ " y: " + (y-MouseKey.ScreenOffset));
 
                 String button = event.getButton().name();
                 if (button.equals("PRIMARY")) {
@@ -89,14 +109,20 @@ public class ViewController {
 
             @Override
             public void handle(MouseEvent event) {
-
+                if (isfullScreen) {
+                    xOffsetScale = xOffsetScaleFullScreen;
+                    yOffsetScale = yOffsetScaleFullScreen;
+                } else {
+                    xOffsetScale = xOffsetScaleNotFullScreen;
+                    yOffsetScale = yOffsetScaleNotFullScreen;
+                }
                 try {
                     int x = (int) (event.getScreenX() * xOffsetScale) + MouseKey.ScreenOffset;
                     int y = (int) (event.getScreenY() * yOffsetScale) + MouseKey.ScreenOffset;
                     Thread.sleep(200);
                     Server.sendEvent(x);
                     Server.sendEvent(y);
-                    System.out.println("Mouse moved to x: " + x + " y: " + y);
+                    System.out.println("Mouse moved to x: " + (x-MouseKey.ScreenOffset)+ " y: " + (y-MouseKey.ScreenOffset));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
