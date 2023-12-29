@@ -134,7 +134,6 @@ public class Client {
                     output.write(byteImage[i] + 127);
                     output.flush();
                 }
-                System.out.println("Image sent");
             }
  
         } catch (AWTException | IOException e) {
