@@ -169,16 +169,13 @@ public class UserController {
                     clientHandlerThread.start();
 
                     // Sending screen capture
-                    client.createScreenCaptureThread();
+                    client.screenCapture();
                 } 
             }
         };
 
         Thread newThread = new Thread(run);
         newThread.start();
-            
-    
-
     }
 
 
@@ -196,7 +193,7 @@ public class UserController {
     public void acceptConnection(ActionEvent event) {
         System.out.println("Accepted");
         System.out.println("Loading Screen");
-        ScreenController.activate("view");
+        ScreenController.activate("app-view");
         BufferedOutputStream writer = Server.getOutputStream();
         
         // Sending confirmation to Client
