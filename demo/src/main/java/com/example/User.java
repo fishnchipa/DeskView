@@ -46,7 +46,7 @@ public class User extends Application{
             screenController.addScreen("app-start", loader1);
 
             FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/app-view.fxml"));
-            screenController.addScreen("view", loader2);
+            screenController.addScreen("app-view", loader2);
 
             FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/capture.fxml"));
             screenController.addScreen("capture", loader3);
