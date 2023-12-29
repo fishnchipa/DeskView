@@ -65,13 +65,11 @@ public class Server implements Runnable {
                     userController.showPermission(this);
 
                     // Recieve Screen Size
-                    
                     Dimension clientScreen = getScreenDetails();
                     ViewController view = new ViewController(clientScreen);
                     FXMLLoader viewLoader = ScreenController.getLoader("app-view");
                     viewLoader.setController(view);
-                    view.setClientScreenDetails(clientScreen);
-
+                    
                     synchronized(this) {
                         this.wait();
                     }
