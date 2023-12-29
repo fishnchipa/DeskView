@@ -30,6 +30,7 @@ import com.example.Controllers.UserController;
 import com.example.Controllers.ViewController;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 
@@ -64,8 +65,11 @@ public class Server implements Runnable {
                     userController.showPermission(this);
 
                     // Recieve Screen Size
-                    ViewController view = ScreenController.getController("app-view");
+                    
                     Dimension clientScreen = getScreenDetails();
+                    ViewController view = new ViewController(clientScreen);
+                    FXMLLoader viewLoader = ScreenController.getLoader("app-view");
+                    viewLoader.setController(view);
                     view.setClientScreenDetails(clientScreen);
 
                     synchronized(this) {
