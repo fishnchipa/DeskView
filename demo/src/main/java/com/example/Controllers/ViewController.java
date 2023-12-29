@@ -60,9 +60,6 @@ public class ViewController {
         ScreenView.fitWidthProperty().bind(Body.widthProperty());
         ScreenView.fitHeightProperty().bind(Body.heightProperty().subtract(50));
 
-        yOffsetScaleNotFullScreen = clientScreenSize.getHeight() / Body.getHeight() - 50;
-        xOffsetScaleNotFullScreen = clientScreenSize.getWidth() / Body.getWidth();
-
         yOffsetScaleFullScreen = clientScreenSize.getHeight() / screenHeightFullSize;
         xOffsetScaleFullScreen = clientScreenSize.getWidth() / screenWidthFullSize;
 
@@ -85,8 +82,8 @@ public class ViewController {
                     xOffsetScale = xOffsetScaleFullScreen;
                     yOffsetScale = yOffsetScaleFullScreen;
                 } else {
-                    xOffsetScale = xOffsetScaleNotFullScreen;
-                    yOffsetScale = yOffsetScaleNotFullScreen;
+                    xOffsetScale = clientScreenSize.getWidth() / ScreenView.getFitWidth();
+                    yOffsetScale = clientScreenSize.getHeight() / ScreenView.getFitHeight();
                 }
                 int x = (int) (event.getScreenX() * xOffsetScale) + MouseKey.ScreenOffset;
                 int y = (int) (event.getScreenY() * yOffsetScale) + MouseKey.ScreenOffset;
@@ -113,8 +110,8 @@ public class ViewController {
                     xOffsetScale = xOffsetScaleFullScreen;
                     yOffsetScale = yOffsetScaleFullScreen;
                 } else {
-                    xOffsetScale = xOffsetScaleNotFullScreen;
-                    yOffsetScale = yOffsetScaleNotFullScreen;
+                    xOffsetScale = clientScreenSize.getWidth() / ScreenView.getFitWidth();
+                    yOffsetScale = clientScreenSize.getHeight() / ScreenView.getFitHeight();
                 }
                 try {
                     int x = (int) (event.getScreenX() * xOffsetScale) + MouseKey.ScreenOffset;
