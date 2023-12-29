@@ -1,12 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.ViewController">
+<AnchorPane fx:id="Body" prefHeight="600.0" prefWidth="809.0" styleClass="body" stylesheets="@css/app-view.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.ViewController">
    <children>
-      <ImageView fx:id="screen" fitHeight="1080.0" fitWidth="1920.0" layoutX="36.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button focusTraversable="false" layoutX="900.0" layoutY="24.0" mnemonicParsing="false" onAction="#exit" prefHeight="35.0" prefWidth="63.0" text="Exit" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="24.0" />
+      <ImageView fx:id="ScreenView" fitHeight="550.0" fitWidth="809.0" layoutY="72.0" pickOnBounds="true" styleClass="screen-view" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <image>
+            <Image url="@icons/document.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="HeaderTransition" layoutY="-53.0" prefHeight="103.0" prefWidth="809.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="Header" layoutY="52.0" prefHeight="50.0" prefWidth="809.0" styleClass="header" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="13.0">
+                     <image>
+                        <Image url="@icons/arrow.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="52.0" layoutY="16.0" styleClass="logo-label" text="DeskView" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <AnchorPane layoutX="658.0" layoutY="10.0" AnchorPane.rightAnchor="120.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#exit" prefHeight="30.0" prefWidth="30.0" text="Button" />
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/exit.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="714.0" layoutY="10.0" AnchorPane.rightAnchor="65.0">
+                     <children>
+                        <Button layoutY="3.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" />
+                        <ImageView fitHeight="30.0" fitWidth="30.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/computer.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="765.0" layoutY="10.0" AnchorPane.rightAnchor="13.0">
+                     <children>
+                        <Button layoutY="3.0" mnemonicParsing="false" onAction="#fullScreen" prefHeight="24.0" prefWidth="31.0" text="Button" />
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/fullscreen.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

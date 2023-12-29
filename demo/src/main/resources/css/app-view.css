@@ -1,0 +1,33 @@
+
+.body {
+    -fx-background-color:red;
+}
+
+
+.header {
+    -fx-background-color:#30303d;
+}
+
+
+.button {
+    -fx-background-color:transparent;
+}
+
+.button:hover {
+    -fx-cursor:hand;
+}
+
+#screen-view {
+    -fx-background-color:white;
+
+}
+
+.exit-label {
+    -fx-display:none;
+}
+
+.logo-label {
+    -fx-font-family: 'Poppins-Bold';
+    -fx-text-fill:linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #bcbbd1 0.0%, #c981af 100.0%);
+    
+}
