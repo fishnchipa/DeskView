@@ -68,6 +68,7 @@ public class Client {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output));
         try {
             writer.write(screenSize.toString());
+            writer.newLine();
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
