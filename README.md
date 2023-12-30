@@ -36,37 +36,44 @@ This project was built with Maven version 3.9.6 and Java version 21.0.1
     ```sh
   sudo apt install default-jdk
   ```
+
+#### Windows
+* Maven
+  1. Download and Extract package from Maven website
+  2. Add MAVEN_HOME System Variable to the maven directory
+  3. Add MAVEN_HOME Directory in PATH Variable
+ 
+     
+* Java
+  1. Download Java from oracle website and complete the installer
+  2. Add Java to System Variables
+  3. Add JAVA_HOME Variable to path
+  
+    
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+_Installation and setup of application_
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
+   ```   
+2. Install the dependencies 
    ```sh
-   npm install
+   mvn install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+3. Run the application with
+   ```sh
+   mvn javafx:run
+   ```
+   _or_
+   
+      ```sh
+   mvn clean javafx:run
    ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-[product-screenshot1]: images/image1.png
-[product-screenshot2]: images/image2.png
 
