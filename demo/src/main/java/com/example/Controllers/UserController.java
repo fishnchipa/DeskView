@@ -12,11 +12,16 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.function.UnaryOperator;
 
 import javax.imageio.ImageIO;
@@ -140,7 +145,23 @@ public class UserController {
         try {
             datagramSocket = new DatagramSocket();
             datagramSocket.connect(InetAddress.getByName("8.8.8.8"),12345);
-            ConnectionId.setText(datagramSocket.getLocalAddress().getHostAddress());
+            String address = datagramSocket.getLocalAddress().getHostAddress();
+            String[] addressInt = address.split("[.]");
+
+            int userId = 0;
+            int mask = 0xff;
+            for (int i = 0; i < addressInt.length; i++) {
+                int portInt = Integer.parseInt(addressInt[i]);
+                if (i == addressInt.length - 1) {
+                    userId = userId | ((portInt & mask) << (8*(addressInt.length - i - 1)));
+                } else {
+                    userId = userId | ((portInt & mask) << (8*(addressInt.length - i - 1)) - 1);
+                }
+
+            } 
+            
+            ConnectionId.setText(Integer.toString(userId));
+
         } catch (SocketException | UnknownHostException e) {
             e.printStackTrace();
         }
