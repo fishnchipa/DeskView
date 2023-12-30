@@ -56,7 +56,7 @@ _Installation and setup of application_
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/fishnchipa/DeskView.git
    ```   
 2. Install the dependencies 
    ```sh
