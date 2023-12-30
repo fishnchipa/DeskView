@@ -66,7 +66,7 @@ public class ClientEventHandler implements Runnable {
                         int x = key - MouseKey.ScreenOffset;
                         int y = client.receiveEvent() - MouseKey.ScreenOffset;
                         System.out.println("Moused Move to x: " + x + " y: " + y);
-                        robot.mouseMove(x, y - 40);
+                        robot.mouseMove(x, y);
                     }
                 }
                 System.out.println("Key pressed: " + key);
