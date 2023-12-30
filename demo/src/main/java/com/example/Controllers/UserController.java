@@ -161,7 +161,7 @@ public class UserController {
             } 
             
             ConnectionId.setText(Integer.toString(userId));
-
+   
         } catch (SocketException | UnknownHostException e) {
             e.printStackTrace();
         }

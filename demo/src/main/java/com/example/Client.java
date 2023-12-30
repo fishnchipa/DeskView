@@ -35,6 +35,7 @@ import com.example.Controllers.ViewController;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Screen;
@@ -47,9 +48,14 @@ public class Client {
     private int resizedWidth = 1920;
 
 
-    public void connectToServer(String ip) { 
+    public void connectToServer(String id) { 
+
+        int port = Integer.parseInt(DataHandler.getData("port"));
+
+        String ip = getIp(id);
+
         try {
-            socket = new Socket(ip, 8080);
+            socket = new Socket(ip, port);
             input = socket.getInputStream();
             output = socket.getOutputStream();
 
@@ -62,6 +68,17 @@ public class Client {
     }
 
 
+    private String getIp(String id) {
+        int conn = Integer.parseInt(id);
+        String num1 = Integer.toString((0xff << 23) & conn);
+        String num2 = Integer.toString((0xff << 15) & conn);
+        String num3 = Integer.toString((0xff << 7) & conn);
+        String num4 = Integer.toString(0xff & conn);
+        
+        String address = num1 + "." + num2 + "." + num3 + "." + num4;
+
+        return address;
+    }
 
     public void sendScreenDetails() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
