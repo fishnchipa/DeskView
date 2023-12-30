@@ -54,12 +54,13 @@ public class Client {
 
         String ip = getIp(id);
 
+        System.out.println("Processing connection" + " " + ip);
         try {
             socket = new Socket(ip, port);
             input = socket.getInputStream();
             output = socket.getOutputStream();
 
-            System.out.println("Processing connection" + " " + ip);
+            
 
         } catch (IOException e) {
             System.out.println("Failed to connect");
@@ -70,9 +71,9 @@ public class Client {
 
     private String getIp(String id) {
         int conn = Integer.parseInt(id);
-        String num1 = Integer.toString((0xff << 23) & conn);
-        String num2 = Integer.toString((0xff << 15) & conn);
-        String num3 = Integer.toString((0xff << 7) & conn);
+        String num1 = Integer.toString(((0xff << 23) & conn) >> 23);
+        String num2 = Integer.toString(((0xff << 15) & conn) >> 15);
+        String num3 = Integer.toString(((0xff << 7) & conn) >> 7);
         String num4 = Integer.toString(0xff & conn);
         
         String address = num1 + "." + num2 + "." + num3 + "." + num4;
