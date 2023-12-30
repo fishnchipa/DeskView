@@ -23,12 +23,19 @@ Instructions on setting up this project locally on your own machine.
 
 ### Prerequisites
 
-This project was built with maven 3.9.6
+
+
+This project was built with Maven version 3.9.6 and Java version 21.0.1
+
+#### Linux
 * Maven
   ```sh
-  npm install npm@latest -g
+  sudo apt install maven
   ```
-
+* Java
+    ```sh
+  sudo apt install default-jdk
+  ```
 ### Installation
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
