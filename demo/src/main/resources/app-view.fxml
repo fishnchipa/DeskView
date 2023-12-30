@@ -9,11 +9,7 @@
 
 <AnchorPane fx:id="Body" prefHeight="600.0" prefWidth="809.0" styleClass="body" stylesheets="@css/app-view.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="ScreenView" fitHeight="550.0" fitWidth="809.0" layoutY="50.0" pickOnBounds="true" smooth="false" styleClass="screen-view" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-         <image>
-            <Image url="@icons/document.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="ScreenView" fitHeight="550.0" fitWidth="809.0" layoutY="50.0" pickOnBounds="true" smooth="false" styleClass="screen-view" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
       <AnchorPane fx:id="HeaderTransition" layoutY="-53.0" prefHeight="103.0" prefWidth="809.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <AnchorPane fx:id="Header" layoutY="52.0" prefHeight="50.0" prefWidth="809.0" styleClass="header" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
